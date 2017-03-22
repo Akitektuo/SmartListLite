@@ -1,20 +1,15 @@
 package com.akitektuo.smartlist.activity;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,24 +40,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private static TextView textResult;
     private RelativeLayout layoutHeader;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
-        preference = new Preference(this);
-        if (!preference.getPreferenceBoolean(KEY_CREATED)) {
-            preference.setDefault();
-        }
-        database = new DatabaseHelper(this);
-        listView = (ListView) findViewById(R.id.list_main);
-        textResult = (TextView) findViewById(R.id.text_result);
-        layoutHeader = (RelativeLayout) findViewById(R.id.layout_list_header);
-        findViewById(R.id.button_delete_all).setOnClickListener(this);
-        findViewById(R.id.button_settings).setOnClickListener(this);
-        refreshForColor(preference.getPreferenceString(KEY_COLOR));
-        refreshList(this);
-    }
-
     public static void refreshList(Context context) {
         int sum = 0;
         ListItem[] listItems = new ListItem[database.getListNumberNew()];
@@ -81,8 +58,27 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         textResult.setText(context.getString(R.string.total, sum, preference.getPreferenceString(KEY_CURRENCY)));
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list);
+        preference = new Preference(this);
+        if (!preference.getPreferenceBoolean(KEY_CREATED)) {
+            preference.setDefault();
+        }
+        database = new DatabaseHelper(this);
+        listView = (ListView) findViewById(R.id.list_main);
+        textResult = (TextView) findViewById(R.id.text_result);
+        layoutHeader = (RelativeLayout) findViewById(R.id.layout_list_header);
+        findViewById(R.id.button_delete_all).setOnClickListener(this);
+        findViewById(R.id.button_settings).setOnClickListener(this);
+        refreshForColor(preference.getPreferenceString(KEY_COLOR));
+        refreshList(this);
+    }
+
     private void deleteAllItems() {
-        handler.post(()-> {
+        handler.post(new Runnable() {
+            public void run() {
                 for (int i = 1; i < database.getListNumberNew(); i++) {
                     database.deleteList(database.getWritableDatabase(), i);
                 }
@@ -97,9 +93,13 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 AlertDialog.Builder builderDelete = new AlertDialog.Builder(this);
                 builderDelete.setTitle("Delete All Items");
                 builderDelete.setMessage("Are you sure you want to delete all items?");
-                builderDelete.setPositiveButton("Delete", (dialogInterface,i) -> {
+                builderDelete.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
                         deleteAllItems();
-                        new Handler().postDelayed(()->{
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
                                 refreshList(getBaseContext());
                             }
                         }, 500);
