@@ -14,7 +14,6 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,7 +26,9 @@ import com.kyleduo.switchbutton.SwitchButton;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -358,7 +359,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     }
 
     private void exportToExcel(Cursor cursor) {
-        File file = new File(Environment.getExternalStorageDirectory() + File.separator + "SmartList", "SmartList.xls");
+        File file = new File(Environment.getExternalStorageDirectory() + File.separator + "SmartList", "SmartList_" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".xls");
         if (!file.exists()) {
             if (file.getParentFile().mkdirs()) {
                 Toast.makeText(getApplicationContext(), "File failed.", Toast.LENGTH_SHORT).show();
@@ -403,7 +404,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     }
 
     private void openGeneratedFile() {
-        File path = new File(Environment.getExternalStorageDirectory() + File.separator + "SmartList", "SmartList.xls");
+        File path = new File(Environment.getExternalStorageDirectory() + File.separator + "SmartList", "SmartList_" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".xls");
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(path), "application/vnd.ms-excel");
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

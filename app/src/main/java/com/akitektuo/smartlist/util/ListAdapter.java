@@ -2,7 +2,6 @@ package com.akitektuo.smartlist.util;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,29 +102,38 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
                 ListActivity.refreshList(context);
             }
         });
-        holder.buttonSave.setOnClickListener(new View.OnClickListener() {
+
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View view) {
-                if (holder.editValue.getText().toString().isEmpty() || holder.editAutoProduct.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "Fill in all fields.", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (position + 1 == database.getListNumberNew()) {
-                        database.addList(database.getWritableDatabase(), database.getListNumberNew(),
-                                holder.editValue.getText().toString(), holder.editAutoProduct.getText().toString());
-                        ListActivity.refreshList(context);
-                        Toast.makeText(context, "Item saved...", Toast.LENGTH_SHORT).show();
-                    } else {
-                        database.updateList(database.getWritableDatabase(), position + 1, item.getNumber(),
-                                holder.editValue.getText().toString(), holder.editAutoProduct.getText().toString());
-                        ListActivity.refreshList(context);
-                        Toast.makeText(context, "Item updated...", Toast.LENGTH_SHORT).show();
+            public void run() {
+                holder.buttonSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (holder.editValue.getText().toString().isEmpty() || holder.editAutoProduct.getText().toString().isEmpty()) {
+                            Toast.makeText(context, "Fill in all fields.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (holder.editAutoProduct.getText().toString().substring(0, 1).equals("-")) {
+                                holder.editValue.setText(holder.editAutoProduct.getText().toString());
+                            }
+                            if (position + 1 == database.getListNumberNew()) {
+                                database.addList(database.getWritableDatabase(), database.getListNumberNew(),
+                                        holder.editValue.getText().toString(), holder.editAutoProduct.getText().toString());
+                                ListActivity.refreshList(context);
+                                Toast.makeText(context, "Item saved...", Toast.LENGTH_SHORT).show();
+                            } else {
+                                database.updateList(database.getWritableDatabase(), position + 1, item.getNumber(),
+                                        holder.editValue.getText().toString(), holder.editAutoProduct.getText().toString());
+                                ListActivity.refreshList(context);
+                                Toast.makeText(context, "Item updated...", Toast.LENGTH_SHORT).show();
+                            }
+                            database.updatePrices(database.getWritableDatabase(), holder.editAutoProduct.getText().toString(),
+                                    holder.editValue.getText().toString());
+                            refreshList(holder.editAutoProduct);
+                        }
                     }
-                    database.updatePrices(database.getWritableDatabase(), holder.editAutoProduct.getText().toString(),
-                            holder.editValue.getText().toString());
-                    refreshList(holder.editAutoProduct);
-                }
+                });
             }
-        });
+        }).start();
         holder.editValue.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -190,6 +197,25 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
         }
     }
 
+    private void refreshList(final AutoCompleteTextView autoCompleteTextView) {
+        if (preference.getPreferenceBoolean(KEY_RECOMMENDATIONS)) {
+            handler.post(new Runnable() {
+                public void run() {
+                    ArrayList<String> list = new ArrayList<>();
+                    Cursor cursor = database.getUsage(database.getReadableDatabase());
+                    if (cursor.moveToFirst()) {
+                        do {
+                            list.add(cursor.getString(0));
+                        } while (cursor.moveToNext());
+                    }
+                    cursor.close();
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, list);
+                    autoCompleteTextView.setAdapter(adapter);
+                }
+            });
+        }
+    }
+
     private class ViewHolder {
         TextView textNumber;
         EditText editValue;
@@ -237,25 +263,6 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
                     buttonSave.setBackground(context.getDrawable(R.drawable.save_black));
                     break;
             }
-        }
-    }
-
-    private void refreshList(final AutoCompleteTextView autoCompleteTextView) {
-        if (preference.getPreferenceBoolean(KEY_RECOMMENDATIONS)) {
-            handler.post(new Runnable() {
-                public void run() {
-                    ArrayList<String> list = new ArrayList<>();
-                    Cursor cursor = database.getUsage(database.getReadableDatabase());
-                    if (cursor.moveToFirst()) {
-                        do {
-                            list.add(cursor.getString(0));
-                        } while (cursor.moveToNext());
-                    }
-                    cursor.close();
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, list);
-                    autoCompleteTextView.setAdapter(adapter);
-                }
-            });
         }
     }
 }
