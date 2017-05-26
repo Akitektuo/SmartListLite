@@ -138,7 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.update(DatabaseContract.UsageContractEntry.TABLE_NAME, contentValues, selection, selectionArgs);
     }
 
-    public int getPriceForProduct(SQLiteDatabase database, String product) {
+    public int getCommonPriceForProduct(SQLiteDatabase database, String product) {
         String[] pricesRaw = getPricesForProducts(database, product).split("_");
         int[] prices = new int[preference.getPreferenceInt(KEY_SMART_PRICE)];
         int priceMax = Integer.MIN_VALUE, res = 0;
@@ -153,7 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void addProduct(SQLiteDatabase database, String product, String price) {
-        int[] pricesGenerate = new int[preference.getPreferenceInt(KEY_SMART_PRICE)];
+        int[] pricesGenerate = new int[1001];
         String stringBuilder = "";
         for (int i = 0; i < pricesGenerate.length; i++) {
             pricesGenerate[i] = 0;

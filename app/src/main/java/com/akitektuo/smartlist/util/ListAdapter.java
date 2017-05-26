@@ -87,7 +87,7 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
                 if (holder.editValue.getText().toString().isEmpty() && preference.getPreferenceBoolean(KEY_AUTO_FILL)) {
                     handler.post(new Runnable() {
                         public void run() {
-                            holder.editValue.setText(String.valueOf(database.getPriceForProduct(database.getReadableDatabase(), adapterView.getItemAtPosition(i).toString())));
+                            holder.editValue.setText(String.valueOf(database.getCommonPriceForProduct(database.getReadableDatabase(), adapterView.getItemAtPosition(i).toString())));
                         }
                     });
                 }

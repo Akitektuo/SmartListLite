@@ -249,7 +249,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                             Toast.makeText(getApplicationContext(), "Set the limit.", Toast.LENGTH_SHORT).show();
                         } else {
                             if (Integer.parseInt(limit) < 1000) {
-                                preference.setPreference(KEY_SMART_PRICE, Integer.parseInt(limit));
+                                preference.setPreference(KEY_SMART_PRICE, Integer.parseInt(limit) + 1);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Limit too high.", Toast.LENGTH_SHORT).show();
                             }
