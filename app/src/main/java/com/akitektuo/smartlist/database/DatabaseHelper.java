@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import static com.akitektuo.smartlist.util.Constant.KEY_SMART_PRICE;
+import static com.akitektuo.smartlist.util.Constant.PRICE_LIMIT;
 import static com.akitektuo.smartlist.util.Constant.handler;
 import static com.akitektuo.smartlist.util.Constant.preference;
 
@@ -153,7 +154,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void addProduct(SQLiteDatabase database, String product, String price) {
-        int[] pricesGenerate = new int[1001];
+        int[] pricesGenerate = new int[PRICE_LIMIT];
         String stringBuilder = "";
         for (int i = 0; i < pricesGenerate.length; i++) {
             pricesGenerate[i] = 0;

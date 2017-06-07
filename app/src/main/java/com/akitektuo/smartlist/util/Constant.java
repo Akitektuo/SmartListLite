@@ -29,8 +29,7 @@ public class Constant {
     public static final String COLOR_ORANGE = "orange";
     public static final String COLOR_BLACK = "black";
     public static final Handler handler = new Handler(Looper.getMainLooper());
-
-    public static Preference preference;
+    public static final int PRICE_LIMIT = 1001;
     public static final String KEY_INITIALIZE = "initialize";
     public static final String KEY_CREATED = "created";
     public static final String KEY_CURRENCY = "currency";
@@ -38,5 +37,6 @@ public class Constant {
     public static final String KEY_AUTO_FILL = "auto_fill";
     public static final String KEY_SMART_PRICE = "smart_price";
     public static final String KEY_COLOR = "color";
+    public static Preference preference;
 
 }

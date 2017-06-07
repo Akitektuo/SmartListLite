@@ -63,6 +63,7 @@ import static com.akitektuo.smartlist.util.Constant.KEY_COLOR;
 import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
 import static com.akitektuo.smartlist.util.Constant.KEY_RECOMMENDATIONS;
 import static com.akitektuo.smartlist.util.Constant.KEY_SMART_PRICE;
+import static com.akitektuo.smartlist.util.Constant.PRICE_LIMIT;
 import static com.akitektuo.smartlist.util.Constant.preference;
 
 public class SettingsActivity extends Activity implements View.OnClickListener {
@@ -77,6 +78,11 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     private TextView textFill;
     private TextView textColor;
     private TextView textExcel;
+    private ImageView imageCurrency;
+    private ImageView imageRecommendation;
+    private ImageView imageFill;
+    private ImageView imageColor;
+    private ImageView imageExcel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +100,11 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         textFill = (TextView) findViewById(R.id.text_settings_fill);
         textColor = (TextView) findViewById(R.id.text_settings_color);
         textExcel = (TextView) findViewById(R.id.text_settings_excel);
+        imageCurrency = (ImageView) findViewById(R.id.image_settings_currency);
+        imageRecommendation = (ImageView) findViewById(R.id.image_settings_recommendations);
+        imageFill = (ImageView) findViewById(R.id.image_settings_fill);
+        imageColor = (ImageView) findViewById(R.id.image_settings_color);
+        imageExcel = (ImageView) findViewById(R.id.image_settings_excel);
         database = new DatabaseHelper(this);
         findViewById(R.id.button_back).setOnClickListener(this);
         findViewById(R.id.layout_currency).setOnClickListener(this);
@@ -248,7 +259,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                         if (limit.isEmpty()) {
                             Toast.makeText(getApplicationContext(), "Set the limit.", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (Integer.parseInt(limit) <= 1000) {
+                            if (Integer.parseInt(limit) < PRICE_LIMIT) {
                                 preference.setPreference(KEY_SMART_PRICE, Integer.parseInt(limit) + 1);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Limit too high.", Toast.LENGTH_SHORT).show();
@@ -321,21 +332,51 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         switch (color) {
             case COLOR_BLUE:
                 setColor(R.style.Theme_Blue, R.color.colorPrimaryBlue, R.color.colorPrimaryDarkBlue);
+                imageCurrency.setImageDrawable(getDrawable(R.drawable.currency_blue));
+                imageRecommendation.setImageDrawable(getDrawable(R.drawable.recommendation_blue));
+                imageFill.setImageDrawable(getDrawable(R.drawable.fill_blue));
+                imageColor.setImageDrawable(getDrawable(R.drawable.color_blue));
+                imageExcel.setImageDrawable(getDrawable(R.drawable.excel_blue));
                 break;
             case COLOR_YELLOW:
                 setColor(R.style.Theme_Yellow, R.color.colorPrimaryYellow, R.color.colorPrimaryDarkYellow);
+                imageCurrency.setImageDrawable(getDrawable(R.drawable.currency_yellow));
+                imageRecommendation.setImageDrawable(getDrawable(R.drawable.recommendation_yellow));
+                imageFill.setImageDrawable(getDrawable(R.drawable.fill_yellow));
+                imageColor.setImageDrawable(getDrawable(R.drawable.color_yellow));
+                imageExcel.setImageDrawable(getDrawable(R.drawable.excel_yellow));
                 break;
             case COLOR_RED:
                 setColor(R.style.Theme_Red, R.color.colorPrimaryRed, R.color.colorPrimaryDarkRed);
+                imageCurrency.setImageDrawable(getDrawable(R.drawable.currency_red));
+                imageRecommendation.setImageDrawable(getDrawable(R.drawable.recommendation_red));
+                imageFill.setImageDrawable(getDrawable(R.drawable.fill_red));
+                imageColor.setImageDrawable(getDrawable(R.drawable.color_red));
+                imageExcel.setImageDrawable(getDrawable(R.drawable.excel_red));
                 break;
             case COLOR_GREEN:
                 setColor(R.style.Theme_Green, R.color.colorPrimaryGreen, R.color.colorPrimaryDarkGreen);
+                imageCurrency.setImageDrawable(getDrawable(R.drawable.currency_green));
+                imageRecommendation.setImageDrawable(getDrawable(R.drawable.recommendation_green));
+                imageFill.setImageDrawable(getDrawable(R.drawable.fill_green));
+                imageColor.setImageDrawable(getDrawable(R.drawable.color_green));
+                imageExcel.setImageDrawable(getDrawable(R.drawable.excel_green));
                 break;
             case COLOR_ORANGE:
                 setColor(R.style.Theme_Orange, R.color.colorPrimaryOrange, R.color.colorPrimaryDarkOrange);
+                imageCurrency.setImageDrawable(getDrawable(R.drawable.currency_orange));
+                imageRecommendation.setImageDrawable(getDrawable(R.drawable.recommendation_orange));
+                imageFill.setImageDrawable(getDrawable(R.drawable.fill_orange));
+                imageColor.setImageDrawable(getDrawable(R.drawable.color_orange));
+                imageExcel.setImageDrawable(getDrawable(R.drawable.excel_orange));
                 break;
             case COLOR_BLACK:
                 setColor(R.style.Theme_Black, R.color.colorPrimaryBlack, R.color.colorPrimaryDarkBlack);
+                imageCurrency.setImageDrawable(getDrawable(R.drawable.currency_black));
+                imageRecommendation.setImageDrawable(getDrawable(R.drawable.recommendation_black));
+                imageFill.setImageDrawable(getDrawable(R.drawable.fill_black));
+                imageColor.setImageDrawable(getDrawable(R.drawable.color_black));
+                imageExcel.setImageDrawable(getDrawable(R.drawable.excel_black));
                 break;
         }
     }

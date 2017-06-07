@@ -57,7 +57,7 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="8dp"
-                    android:src="@drawable/exchange_blue" />
+                    android:src="@drawable/currency_blue" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -221,7 +221,7 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="8dp"
-                    android:src="@drawable/exchange_blue" />
+                    android:src="@drawable/color_blue" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -265,7 +265,7 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="8dp"
-                    android:src="@drawable/exchange_blue" />
+                    android:src="@drawable/excel_blue" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
