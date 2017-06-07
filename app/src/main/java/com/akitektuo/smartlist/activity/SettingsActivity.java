@@ -239,7 +239,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                         editLimit.setTextColor(getApplicationContext().getResources().getColor(R.color.colorPrimaryBlack));
                         break;
                 }
-                editLimit.setText(String.valueOf(preference.getPreferenceInt(KEY_SMART_PRICE)));
+                editLimit.setText(String.valueOf(preference.getPreferenceInt(KEY_SMART_PRICE) - 1));
                 builderFill.setView(viewDialog);
                 builderFill.setPositiveButton("Set", new DialogInterface.OnClickListener() {
                     @Override
@@ -248,7 +248,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                         if (limit.isEmpty()) {
                             Toast.makeText(getApplicationContext(), "Set the limit.", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (Integer.parseInt(limit) < 1000) {
+                            if (Integer.parseInt(limit) <= 1000) {
                                 preference.setPreference(KEY_SMART_PRICE, Integer.parseInt(limit) + 1);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Limit too high.", Toast.LENGTH_SHORT).show();
