@@ -24,7 +24,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_QUERY_LIST = "CREATE TABLE " + DatabaseContract.ListContractEntry.TABLE_NAME + " (" +
             DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER + " NUMBER," +
             DatabaseContract.ListContractEntry.COLUMN_NAME_VALUE + " TEXT," +
-            DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT + " TEXT" + ");";
+            DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT + " TEXT," +
+            DatabaseContract.ListContractEntry.COLUMN_NAME_DATE + "TEXT" + ");";
 
     private static final String DATABASE_QUERY_USAGE = "CREATE TABLE " + DatabaseContract.UsageContractEntry.TABLE_NAME + " (" +
             DatabaseContract.UsageContractEntry.COLUMN_NAME_PRODUCTS + " TEXT," +
@@ -45,18 +46,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addList(SQLiteDatabase database, int number, String value, String product) {
+    public void addList(SQLiteDatabase database, int number, String value, String product, String date) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER, number);
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_VALUE, value);
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT, product);
+        contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT, product);
+        contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_DATE, date);
         database.insert(DatabaseContract.ListContractEntry.TABLE_NAME, null, contentValues);
     }
 
     public Cursor getList(SQLiteDatabase database) {
         String[] list = {DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER,
                 DatabaseContract.ListContractEntry.COLUMN_NAME_VALUE,
-                DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT};
+                DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT,
+                DatabaseContract.ListContractEntry.COLUMN_NAME_DATE};
         return database.query(DatabaseContract.ListContractEntry.TABLE_NAME, list, null, null, null, null, null);
     }
 
@@ -72,7 +76,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getListForNumber(SQLiteDatabase database, int number) {
         String[] results = {DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER,
                 DatabaseContract.ListContractEntry.COLUMN_NAME_VALUE,
-                DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT};
+                DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT,
+                DatabaseContract.ListContractEntry.COLUMN_NAME_DATE};
         String selection = DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER + " LIKE ?";
         String[] selectionArgs = {String.valueOf(number)};
         return database.query(DatabaseContract.ListContractEntry.TABLE_NAME, results, selection, selectionArgs, null, null, null);

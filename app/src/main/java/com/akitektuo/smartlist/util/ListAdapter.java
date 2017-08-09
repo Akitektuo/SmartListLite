@@ -19,7 +19,9 @@ import com.akitektuo.smartlist.R;
 import com.akitektuo.smartlist.activity.ListActivity;
 import com.akitektuo.smartlist.database.DatabaseHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.akitektuo.smartlist.util.Constant.COLOR_BLACK;
 import static com.akitektuo.smartlist.util.Constant.COLOR_BLUE;
@@ -117,7 +119,8 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
                             }
                             if (position + 1 == database.getListNumberNew()) {
                                 database.addList(database.getWritableDatabase(), database.getListNumberNew(),
-                                        holder.editValue.getText().toString(), holder.editAutoProduct.getText().toString());
+                                        holder.editValue.getText().toString(), holder.editAutoProduct.getText().toString(),
+                                        new SimpleDateFormat("dd.MM.yyyy hh:mm:ss").format(new Date()));
                                 ListActivity.refreshList(context);
                                 Toast.makeText(context, "Item saved...", Toast.LENGTH_SHORT).show();
                             } else {

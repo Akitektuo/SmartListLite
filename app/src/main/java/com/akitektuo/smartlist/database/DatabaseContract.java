@@ -13,6 +13,7 @@ public class DatabaseContract {
         static final String COLUMN_NAME_NUMBER = "number";
         static final String COLUMN_NAME_VALUE = "value";
         static final String COLUMN_NAME_PRODUCT = "product";
+        static final String COLUMN_NAME_DATE = "date";
     }
 
     abstract class UsageContractEntry implements BaseColumns {

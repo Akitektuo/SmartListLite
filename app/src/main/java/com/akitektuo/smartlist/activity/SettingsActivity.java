@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -105,6 +106,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         imageFill = (ImageView) findViewById(R.id.image_settings_fill);
         imageColor = (ImageView) findViewById(R.id.image_settings_color);
         imageExcel = (ImageView) findViewById(R.id.image_settings_excel);
+        LinearLayout layoutColor = (LinearLayout) findViewById(R.id.layout_color);
         database = new DatabaseHelper(this);
         findViewById(R.id.button_back).setOnClickListener(this);
         findViewById(R.id.layout_currency).setOnClickListener(this);
@@ -116,10 +118,14 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         switchFill.setChecked(preference.getPreferenceBoolean(KEY_AUTO_FILL));
         switchFill.setOnClickListener(this);
         findViewById(R.id.layout_fill).setOnClickListener(this);
-        findViewById(R.id.layout_color).setOnClickListener(this);
+        layoutColor.setOnClickListener(this);
         findViewById(R.id.layout_excel).setOnClickListener(this);
         refreshForColor(preference.getPreferenceString(KEY_COLOR));
         ActivityCompat.requestPermissions(SettingsActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            imageViews[2].setVisibility(View.GONE);
+            layoutColor.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -420,11 +426,13 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 Toast.makeText(getApplicationContext(), "Excel generated successfully.", Toast.LENGTH_SHORT).show();
                 sheet.addCell(new Label(0, 0, "Price")); // column and row
                 sheet.addCell(new Label(1, 0, "Product"));
+                sheet.addCell(new Label(2, 0, "Time added"));
                 if (cursor.moveToFirst()) {
                     do {
                         int i = cursor.getPosition() + 1;
                         sheet.addCell(new Label(0, i, cursor.getString(1)));
                         sheet.addCell(new Label(1, i, cursor.getString(2)));
+                        sheet.addCell(new Label(2, i, cursor.getString(3)));
                     } while (cursor.moveToNext());
                 }
                 //closing cursor
