@@ -120,7 +120,7 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
                             if (position + 1 == database.getListNumberNew()) {
                                 database.addList(database.getWritableDatabase(), database.getListNumberNew(),
                                         holder.editValue.getText().toString(), holder.editAutoProduct.getText().toString(),
-                                        new SimpleDateFormat("dd.MM.yyyy hh:mm:ss").format(new Date()));
+                                        new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
                                 ListActivity.refreshList(context);
                                 Toast.makeText(context, "Item saved...", Toast.LENGTH_SHORT).show();
                             } else {

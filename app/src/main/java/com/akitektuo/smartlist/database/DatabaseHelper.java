@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER + " NUMBER," +
             DatabaseContract.ListContractEntry.COLUMN_NAME_VALUE + " TEXT," +
             DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT + " TEXT," +
-            DatabaseContract.ListContractEntry.COLUMN_NAME_DATE + "TEXT" + ");";
+            DatabaseContract.ListContractEntry.COLUMN_NAME_DATE + " TEXT" + ");";
 
     private static final String DATABASE_QUERY_USAGE = "CREATE TABLE " + DatabaseContract.UsageContractEntry.TABLE_NAME + " (" +
             DatabaseContract.UsageContractEntry.COLUMN_NAME_PRODUCTS + " TEXT," +
@@ -50,7 +50,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER, number);
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_VALUE, value);
-        contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT, product);
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT, product);
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_DATE, date);
         database.insert(DatabaseContract.ListContractEntry.TABLE_NAME, null, contentValues);
