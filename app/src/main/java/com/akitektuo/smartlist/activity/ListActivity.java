@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -16,10 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akitektuo.smartlist.R;
+import com.akitektuo.smartlist.adapter.ListAdapter;
 import com.akitektuo.smartlist.database.DatabaseHelper;
-import com.akitektuo.smartlist.util.ListAdapter;
-import com.akitektuo.smartlist.util.ListItem;
+import com.akitektuo.smartlist.util.ListModel;
 import com.akitektuo.smartlist.util.Preference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.akitektuo.smartlist.util.Constant.COLOR_BLACK;
 import static com.akitektuo.smartlist.util.Constant.COLOR_BLUE;
@@ -32,31 +37,15 @@ import static com.akitektuo.smartlist.util.Constant.KEY_CREATED;
 import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
 import static com.akitektuo.smartlist.util.Constant.handler;
 import static com.akitektuo.smartlist.util.Constant.preference;
+import static com.akitektuo.smartlist.util.Constant.totalCount;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static ListView listView;
+    private static RecyclerView list;
     private static DatabaseHelper database;
     private static TextView textResult;
     private RelativeLayout layoutHeader;
-
-    public static void refreshList(Context context) {
-        int sum = 0;
-        ListItem[] listItems = new ListItem[database.getListNumberNew()];
-        for (int i = 0; i < database.getListNumberNew(); i++) {
-            if (i + 1 == database.getListNumberNew()) {
-                listItems[i] = new ListItem(i + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0);
-                break;
-            }
-            Cursor cursor = database.getListForNumber(database.getReadableDatabase(), i + 1);
-            if (cursor.moveToFirst()) {
-                listItems[i] = new ListItem(cursor.getInt(0), cursor.getString(1), preference.getPreferenceString(KEY_CURRENCY), cursor.getString(2), 1);
-                sum += Integer.parseInt(cursor.getString(1));
-            }
-        }
-        listView.setAdapter(new ListAdapter(context, listItems));
-        textResult.setText(context.getString(R.string.total, sum, preference.getPreferenceString(KEY_CURRENCY)));
-    }
+    private List<ListModel> listModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,20 +56,34 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             preference.setDefault();
         }
         database = new DatabaseHelper(this);
-        listView = (ListView) findViewById(R.id.list_main);
+        list = (RecyclerView) findViewById(R.id.list_main);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        list.setLayoutManager(linearLayoutManager);
         textResult = (TextView) findViewById(R.id.text_result);
         layoutHeader = (RelativeLayout) findViewById(R.id.layout_list_header);
         findViewById(R.id.button_delete_all).setOnClickListener(this);
         findViewById(R.id.button_settings).setOnClickListener(this);
         refreshForColor(preference.getPreferenceString(KEY_COLOR));
-        refreshList(this);
+        totalCount = 0;
+        listModels = new ArrayList<>();
+        Cursor cursor = database.getList();
+        if (cursor.moveToFirst()) {
+            do {
+                listModels.add(new ListModel(cursor.getInt(0), cursor.getString(1), preference.getPreferenceString(KEY_CURRENCY), cursor.getString(2), 1));
+                totalCount += Integer.parseInt(cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+        listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
+        list.setAdapter(new ListAdapter(this, listModels, textResult));
+        textResult.setText(getString(R.string.total, totalCount, preference.getPreferenceString(KEY_CURRENCY)));
+        list.smoothScrollToPosition(list.getAdapter().getItemCount() - 1);
     }
 
     private void deleteAllItems() {
         handler.post(new Runnable() {
             public void run() {
                 for (int i = 1; i < database.getListNumberNew(); i++) {
-                    database.deleteList(database.getWritableDatabase(), i);
+                    database.deleteList(i);
                 }
             }
         });
@@ -100,7 +103,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                refreshList(getBaseContext());
+                                listModels.clear();
+                                listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
+                                totalCount = 0;
+                                textResult.setText(getBaseContext().getString(R.string.total, totalCount, preference.getPreferenceString(KEY_CURRENCY)));
+                                list.getAdapter().notifyDataSetChanged();
                             }
                         }, 500);
                         Toast.makeText(getApplicationContext(), "All items deleted.", Toast.LENGTH_SHORT).show();

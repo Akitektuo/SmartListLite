@@ -37,6 +37,8 @@ public class Constant {
     public static final String KEY_AUTO_FILL = "auto_fill";
     public static final String KEY_SMART_PRICE = "smart_price";
     public static final String KEY_COLOR = "color";
+
     public static Preference preference;
+    public static int totalCount;
 
 }

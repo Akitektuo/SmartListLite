@@ -46,56 +46,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addList(SQLiteDatabase database, int number, String value, String product, String date) {
+    public void addList(int number, String value, String product, String date) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER, number);
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_VALUE, value);
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT, product);
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_DATE, date);
-        database.insert(DatabaseContract.ListContractEntry.TABLE_NAME, null, contentValues);
+        getWritableDatabase().insert(DatabaseContract.ListContractEntry.TABLE_NAME, null, contentValues);
     }
 
-    public Cursor getList(SQLiteDatabase database) {
+    public Cursor getList() {
         String[] list = {DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER,
                 DatabaseContract.ListContractEntry.COLUMN_NAME_VALUE,
                 DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT,
                 DatabaseContract.ListContractEntry.COLUMN_NAME_DATE};
-        return database.query(DatabaseContract.ListContractEntry.TABLE_NAME, list, null, null, null, null, null);
+        return getReadableDatabase().query(DatabaseContract.ListContractEntry.TABLE_NAME, list, null, null, null, null, null);
     }
 
     public int getListNumberNew() {
         int number = 0;
-        Cursor cursor = getList(getReadableDatabase());
+        Cursor cursor = getList();
         if (cursor.moveToLast()) {
             number = cursor.getInt(0);
         }
+        cursor.close();
         return ++number;
     }
 
-    public Cursor getListForNumber(SQLiteDatabase database, int number) {
+    public Cursor getListForNumber(int number) {
         String[] results = {DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER,
                 DatabaseContract.ListContractEntry.COLUMN_NAME_VALUE,
                 DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT,
                 DatabaseContract.ListContractEntry.COLUMN_NAME_DATE};
         String selection = DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER + " LIKE ?";
         String[] selectionArgs = {String.valueOf(number)};
-        return database.query(DatabaseContract.ListContractEntry.TABLE_NAME, results, selection, selectionArgs, null, null, null);
+        return getReadableDatabase().query(DatabaseContract.ListContractEntry.TABLE_NAME, results, selection, selectionArgs, null, null, null);
     }
 
-    public void deleteList(SQLiteDatabase database, int number) {
+    public void deleteList(int number) {
         String selection = DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER + " LIKE ?";
         String[] selectionArgs = {String.valueOf(number)};
-        database.delete(DatabaseContract.ListContractEntry.TABLE_NAME, selection, selectionArgs);
+        getWritableDatabase().delete(DatabaseContract.ListContractEntry.TABLE_NAME, selection, selectionArgs);
     }
 
-    public void updateList(SQLiteDatabase database, int oldNumber, int number, String value, String product) {
+    public void updateList(int oldNumber, int number, String value, String product) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER, number);
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_VALUE, value);
         contentValues.put(DatabaseContract.ListContractEntry.COLUMN_NAME_PRODUCT, product);
         String selection = DatabaseContract.ListContractEntry.COLUMN_NAME_NUMBER + " LIKE ?";
         String[] selectionArgs = {String.valueOf(oldNumber)};
-        database.update(DatabaseContract.ListContractEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+        getWritableDatabase().update(DatabaseContract.ListContractEntry.TABLE_NAME, contentValues, selection, selectionArgs);
     }
 
     private void addUsage(SQLiteDatabase database, String products, String prices) {

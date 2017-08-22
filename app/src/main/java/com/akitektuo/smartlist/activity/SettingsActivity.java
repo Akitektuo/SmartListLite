@@ -318,7 +318,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.layout_excel:
-                exportToExcel(database.getList(database.getReadableDatabase()));
+                exportToExcel(database.getList());
                 AlertDialog.Builder builderOpenXls = new AlertDialog.Builder(this);
                 builderOpenXls.setTitle("Open Excel File");
                 builderOpenXls.setMessage("Are you sure you want to open the file now? You can see it in Internal Storage -> SmartList - > SmartList.xls");

@@ -20,6 +20,8 @@
             android:text="@string/app_name"
             android:textColor="@color/white"
             android:textSize="23sp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:textStyle="bold" />
 
         <Button
@@ -39,7 +41,7 @@
 
     </RelativeLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:padding="16dp"
         android:id="@+id/list_main"
         android:layout_width="match_parent"
@@ -47,9 +49,8 @@
         android:overScrollMode="never"
         android:layout_above="@+id/text_result"
         android:layout_below="@+id/layout_list_header"
-        android:divider="@null"
+        android:divider="@android:color/transparent"
         android:clipToPadding="false"
-        android:scrollingCache="false"
         android:scrollbars="none" />
 
     <TextView

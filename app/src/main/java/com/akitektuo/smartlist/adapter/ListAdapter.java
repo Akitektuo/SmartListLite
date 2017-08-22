@@ -1,7 +1,9 @@
-package com.akitektuo.smartlist.util;
+package com.akitektuo.smartlist.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,10 +20,12 @@ import android.widget.Toast;
 import com.akitektuo.smartlist.R;
 import com.akitektuo.smartlist.activity.ListActivity;
 import com.akitektuo.smartlist.database.DatabaseHelper;
+import com.akitektuo.smartlist.util.ListModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static com.akitektuo.smartlist.util.Constant.COLOR_BLACK;
 import static com.akitektuo.smartlist.util.Constant.COLOR_BLUE;
@@ -31,45 +35,45 @@ import static com.akitektuo.smartlist.util.Constant.COLOR_RED;
 import static com.akitektuo.smartlist.util.Constant.COLOR_YELLOW;
 import static com.akitektuo.smartlist.util.Constant.KEY_AUTO_FILL;
 import static com.akitektuo.smartlist.util.Constant.KEY_COLOR;
+import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
 import static com.akitektuo.smartlist.util.Constant.KEY_RECOMMENDATIONS;
 import static com.akitektuo.smartlist.util.Constant.handler;
 import static com.akitektuo.smartlist.util.Constant.preference;
+import static com.akitektuo.smartlist.util.Constant.totalCount;
 
 /**
- * Created by AoD Akitektuo on 14-Mar-17.
+ * Created by AoD Akitektuo on 22-Aug-17 at 19:27.
  */
 
-public class ListAdapter extends ArrayAdapter<ListItem> {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     private Context context;
-    private ListItem[] items;
+    private List<ListModel> listModels;
     private DatabaseHelper database;
+    private TextView textTotal;
 
-    public ListAdapter(Context context, ListItem[] listItems) {
-        super(context, R.layout.item_list, listItems);
+    public ListAdapter(Context context, List<ListModel> listModels, TextView textTotal) {
         this.context = context;
-        items = listItems;
+        this.listModels = listModels;
+        database = new DatabaseHelper(context);
+        this.textTotal = textTotal;
     }
 
     @Override
-    public View getView(final int position, View view, ViewGroup parent) {
-        final ViewHolder holder;
-        if (view == null) {
-            final LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.item_list, parent, false);
-            holder = new ViewHolder(view);
-            view.setTag(holder);
-        } else {
-            holder = (ViewHolder) view.getTag();
-        }
-        database = new DatabaseHelper(context);
-        final ListItem item = items[position];
-        holder.textNumber.setText(changeNumber(item.getNumber()));
-        holder.editValue.setText(item.getValue());
-        holder.textCurrency.setText(item.getCurrency());
-        holder.editAutoProduct.setText(item.getProduct());
-        switch (item.getButtonType()) {
+    public ListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.item_list, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final ListModel listModel = listModels.get(position);
+        holder.textNumber.setText(changeNumber(listModel.getNumber()));
+        holder.editValue.setText(listModel.getValue());
+        holder.textCurrency.setText(listModel.getCurrency());
+        holder.editAutoProduct.setText(listModel.getProduct());
+        switch (listModel.getButtonType()) {
             case 0:
                 holder.buttonSave.setVisibility(View.VISIBLE);
                 holder.buttonDelete.setVisibility(View.GONE);
@@ -99,9 +103,12 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Item deleted...", Toast.LENGTH_SHORT).show();
-                database.deleteList(database.getWritableDatabase(), position + 1);
-                updateDatabase(database, position);
-                ListActivity.refreshList(context);
+                totalCount -= Integer.parseInt(listModels.get(holder.getAdapterPosition()).getValue());
+                database.deleteList(holder.getAdapterPosition() + 1);
+                updateDatabase(holder.getAdapterPosition());
+                listModels.remove(holder.getAdapterPosition());
+                notifyDataSetChanged();
+                textTotal.setText(context.getString(R.string.total, totalCount, preference.getPreferenceString(KEY_CURRENCY)));
             }
         });
 
@@ -117,16 +124,24 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
                             if (holder.editAutoProduct.getText().toString().substring(0, 1).equals("-")) {
                                 holder.editValue.setText(holder.editAutoProduct.getText().toString());
                             }
-                            if (position + 1 == database.getListNumberNew()) {
-                                database.addList(database.getWritableDatabase(), database.getListNumberNew(),
-                                        holder.editValue.getText().toString(), holder.editAutoProduct.getText().toString(),
+                            int lastItem = database.getListNumberNew();
+                            String value = holder.editValue.getText().toString();
+                            String product = holder.editAutoProduct.getText().toString();
+                            if (holder.getAdapterPosition() + 1 == lastItem) {
+                                database.addList(lastItem, value, product,
                                         new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-                                ListActivity.refreshList(context);
+                                totalCount += Integer.parseInt(value);
+                                listModels.set(listModels.size() - 1, new ListModel(lastItem, value, preference.getPreferenceString(KEY_CURRENCY), product, 1));
+                                listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
+                                notifyDataSetChanged();
+                                textTotal.setText(context.getString(R.string.total, totalCount, preference.getPreferenceString(KEY_CURRENCY)));
                                 Toast.makeText(context, "Item saved...", Toast.LENGTH_SHORT).show();
                             } else {
-                                database.updateList(database.getWritableDatabase(), position + 1, item.getNumber(),
-                                        holder.editValue.getText().toString(), holder.editAutoProduct.getText().toString());
-                                ListActivity.refreshList(context);
+                                database.updateList(holder.getAdapterPosition() + 1, listModel.getNumber(), value, product);
+                                totalCount += Integer.parseInt(value) - Integer.parseInt(listModels.get(holder.getAdapterPosition()).getValue());
+                                listModels.set(holder.getAdapterPosition(), new ListModel(listModel.getNumber(), value, preference.getPreferenceString(KEY_CURRENCY), product, 1));
+                                notifyDataSetChanged();
+                                textTotal.setText(context.getString(R.string.total, totalCount, preference.getPreferenceString(KEY_CURRENCY)));
                                 Toast.makeText(context, "Item updated...", Toast.LENGTH_SHORT).show();
                             }
                             database.updatePrices(database.getWritableDatabase(), holder.editAutoProduct.getText().toString(),
@@ -150,7 +165,7 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (item.getButtonType() != 0) {
+                if (listModel.getButtonType() != 0) {
                     holder.buttonSave.setVisibility(View.VISIBLE);
                     holder.buttonDelete.setVisibility(View.VISIBLE);
                 } else {
@@ -171,7 +186,7 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (item.getButtonType() != 0) {
+                if (listModel.getButtonType() != 0) {
                     holder.buttonSave.setVisibility(View.VISIBLE);
                     holder.buttonDelete.setVisibility(View.VISIBLE);
                 } else {
@@ -179,7 +194,6 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
                 }
             }
         });
-        return view;
     }
 
     private String changeNumber(int num) {
@@ -189,15 +203,22 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
         return String.valueOf(num);
     }
 
-    private void updateDatabase(DatabaseHelper database, int position) {
-        for (int i = position + 2; i < database.getListNumberNew(); i++) {
-            Cursor cursor = database.getListForNumber(database.getReadableDatabase(), i);
+    private void updateDatabase(int position) {
+        int lastIndex = listModels.size() - 1;
+        for (int i = position + 2; i < lastIndex; i++) {
+            Cursor cursor = database.getListForNumber(i);
             if (cursor.moveToFirst()) {
-                database.updateList(database.getWritableDatabase(), cursor.getInt(0), cursor.getInt(0) - 1,
+                database.updateList(cursor.getInt(0), cursor.getInt(0) - 1,
                         cursor.getString(1), cursor.getString(2));
+                ListModel listModel = listModels.get(i);
+                listModel.decrementNumber();
+                listModels.set(i, listModel);
             }
             cursor.close();
         }
+        ListModel listModel = listModels.get(lastIndex);
+        listModel.decrementNumber();
+        listModels.set(lastIndex, listModel);
     }
 
     private void refreshList(final AutoCompleteTextView autoCompleteTextView) {
@@ -219,7 +240,12 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
         }
     }
 
-    private class ViewHolder {
+    @Override
+    public int getItemCount() {
+        return listModels.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView textNumber;
         EditText editValue;
         TextView textCurrency;
@@ -228,6 +254,7 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
         Button buttonSave;
 
         ViewHolder(View view) {
+            super(view);
             textNumber = (TextView) view.findViewById(R.id.text_item_number);
             editValue = (EditText) view.findViewById(R.id.edit_item_value);
             textCurrency = (TextView) view.findViewById(R.id.text_item_currency);
@@ -268,4 +295,5 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
             }
         }
     }
+
 }

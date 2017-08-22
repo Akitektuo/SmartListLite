@@ -4,7 +4,7 @@ package com.akitektuo.smartlist.util;
  * Created by AoD Akitektuo on 14-Mar-17.
  */
 
-public class ListItem {
+public class ListModel {
 
     private int number;
     private String value;
@@ -12,12 +12,16 @@ public class ListItem {
     private String product;
     private int buttonType;
 
-    public ListItem(int number, String value, String currency, String product, int buttonType) {
+    public ListModel(int number, String value, String currency, String product, int buttonType) {
         setNumber(number);
         setValue(value);
         setCurrency(currency);
         setProduct(product);
         setButtonType(buttonType);
+    }
+
+    public void decrementNumber() {
+        setNumber(getNumber() - 1);
     }
 
     public int getNumber() {
