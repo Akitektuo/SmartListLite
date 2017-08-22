@@ -1,7 +1,6 @@
 package com.akitektuo.smartlist.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akitektuo.smartlist.R;
-import com.akitektuo.smartlist.activity.ListActivity;
 import com.akitektuo.smartlist.database.DatabaseHelper;
 import com.akitektuo.smartlist.util.ListModel;
 
@@ -73,6 +71,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         holder.editValue.setText(listModel.getValue());
         holder.textCurrency.setText(listModel.getCurrency());
         holder.editAutoProduct.setText(listModel.getProduct());
+        holder.editAutoProduct.setSingleLine();
         switch (listModel.getButtonType()) {
             case 0:
                 holder.buttonSave.setVisibility(View.VISIBLE);

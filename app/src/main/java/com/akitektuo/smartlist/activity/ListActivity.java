@@ -1,6 +1,5 @@
 package com.akitektuo.smartlist.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,9 +39,9 @@ import static com.akitektuo.smartlist.util.Constant.totalCount;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static RecyclerView list;
     private static DatabaseHelper database;
-    private static TextView textResult;
+    private RecyclerView list;
+    private TextView textResult;
     private RelativeLayout layoutHeader;
     private List<ListModel> listModels;
 
@@ -58,6 +56,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         database = new DatabaseHelper(this);
         list = (RecyclerView) findViewById(R.id.list_main);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
         list.setLayoutManager(linearLayoutManager);
         textResult = (TextView) findViewById(R.id.text_result);
         layoutHeader = (RelativeLayout) findViewById(R.id.layout_list_header);
@@ -76,7 +75,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
         list.setAdapter(new ListAdapter(this, listModels, textResult));
         textResult.setText(getString(R.string.total, totalCount, preference.getPreferenceString(KEY_CURRENCY)));
-        list.smoothScrollToPosition(list.getAdapter().getItemCount() - 1);
     }
 
     private void deleteAllItems() {
