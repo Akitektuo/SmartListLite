@@ -146,18 +146,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         getWritableDatabase().update(DatabaseContract.UsageContractEntry.TABLE_NAME, contentValues, selection, selectionArgs);
     }
 
-    public double getCommonPriceForProduct(String product) {
+    public int getCommonPriceForProduct(String product) {
         String[] pricesRaw = getPricesForProducts(product).split("_");
-        double[] prices = new double[preference.getPreferenceInt(KEY_SMART_PRICE)];
-        double priceMax = Integer.MIN_VALUE, res = 0;
+        int[] prices = new int[preference.getPreferenceInt(KEY_SMART_PRICE)];
+        int priceMax = Integer.MIN_VALUE, res = 0;
         for (int i = 0; i < prices.length; i++) {
-            prices[i] = Double.parseDouble(pricesRaw[i]);
+            prices[i] = Integer.parseInt(pricesRaw[i]);
             priceMax = Math.max(priceMax, prices[i]);
             if (priceMax == prices[i]) {
                 res = i;
+                if (priceMax == 0) {
+                    return 0;
+                }
             }
         }
-        return (res);
+        return res;
     }
 
     private void addProduct(String product, String price) {

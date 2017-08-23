@@ -93,7 +93,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 if (holder.editValue.getText().toString().isEmpty() && preference.getPreferenceBoolean(KEY_AUTO_FILL)) {
                     handler.post(new Runnable() {
                         public void run() {
-                            holder.editValue.setText(new DecimalFormat("0.#").format(database.getCommonPriceForProduct(adapterView.getItemAtPosition(i).toString())));
+                            int mostUsedPrice = database.getCommonPriceForProduct(adapterView.getItemAtPosition(i).toString());
+                            if (mostUsedPrice != 0) {
+                                holder.editValue.setText(String.valueOf(mostUsedPrice));
+                            }
                         }
                     });
                 }
