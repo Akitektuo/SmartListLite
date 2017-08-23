@@ -105,7 +105,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                                 listModels.clear();
                                 listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
                                 totalCount = 0;
-                                textResult.setText(getBaseContext().getString(R.string.total, totalCount, preference.getPreferenceString(KEY_CURRENCY)));
+                                textResult.setText(getBaseContext().getString(R.string.total, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
                                 list.getAdapter().notifyDataSetChanged();
                             }
                         }, 500);
