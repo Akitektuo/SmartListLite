@@ -56,7 +56,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="16dp"
                     android:src="@drawable/currency_blue" />
 
                 <LinearLayout
@@ -76,6 +76,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
                         android:text="@string/currency_status" />
 
                 </LinearLayout>
@@ -105,7 +106,7 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="16dp"
                         android:src="@drawable/recommendation_blue" />
 
                     <LinearLayout
@@ -126,6 +127,7 @@
                             android:id="@+id/text_settings_recommendations_status"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
                             android:text="@string/recommendations_status" />
 
                     </LinearLayout>
@@ -165,7 +167,7 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="16dp"
                         android:src="@drawable/fill_blue" />
 
                     <LinearLayout
@@ -186,6 +188,7 @@
                             android:id="@+id/text_settings_fill_status"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
                             android:text="@string/fill_status" />
 
                     </LinearLayout>
@@ -220,7 +223,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="16dp"
                     android:src="@drawable/color_blue" />
 
                 <LinearLayout
@@ -240,6 +243,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
                         android:text="@string/color_status" />
 
                 </LinearLayout>
@@ -248,6 +252,51 @@
 
             <ImageView
                 android:id="@+id/image_settings_3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimaryDarkBlue" />
+
+            <LinearLayout
+                android:id="@+id/layout_storage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/image_settings_storage"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/internal_storage_blue" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_settings_storage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/storage"
+                        android:textColor="@color/colorPrimaryBlue"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/storage_status" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/image_settings_4"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />
@@ -264,7 +313,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="16dp"
                     android:src="@drawable/excel_blue" />
 
                 <LinearLayout
@@ -284,6 +333,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
                         android:text="@string/excel_status" />
 
                 </LinearLayout>
@@ -291,7 +341,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/image_settings_4"
+                android:id="@+id/image_settings_5"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />

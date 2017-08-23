@@ -17,4 +17,6 @@
     <string name="fill_limit">Set the limit of Smart Fill</string>
     <string name="fill_aware">Higher limit means worse performance</string>
     <string name="limit">Limit</string>
+    <string name="storage">Export location</string>
+    <string name="storage_status">Choose the export location to internal or external storage for the Microsoft Excel Document</string>
 </resources>

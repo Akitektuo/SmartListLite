@@ -156,7 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (priceMax == prices[i]) {
                 res = i;
                 if (priceMax == 0) {
-                    return 0;
+                    res = 0;
                 }
             }
         }

@@ -7,6 +7,7 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,7 +65,10 @@ import static com.akitektuo.smartlist.util.Constant.KEY_COLOR;
 import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
 import static com.akitektuo.smartlist.util.Constant.KEY_RECOMMENDATIONS;
 import static com.akitektuo.smartlist.util.Constant.KEY_SMART_PRICE;
+import static com.akitektuo.smartlist.util.Constant.KEY_STORAGE;
 import static com.akitektuo.smartlist.util.Constant.PRICE_LIMIT;
+import static com.akitektuo.smartlist.util.Constant.STORAGE_EXTERNAL;
+import static com.akitektuo.smartlist.util.Constant.STORAGE_INTERNAL;
 import static com.akitektuo.smartlist.util.Constant.preference;
 
 public class SettingsActivity extends Activity implements View.OnClickListener {
@@ -79,11 +83,15 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     private TextView textFill;
     private TextView textColor;
     private TextView textExcel;
+    private TextView textStorage;
     private ImageView imageCurrency;
     private ImageView imageRecommendation;
     private ImageView imageFill;
     private ImageView imageColor;
     private ImageView imageExcel;
+    private ImageView imageStorage;
+    private Drawable drawableInternal;
+    private Drawable drawableExternal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,15 +104,18 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         imageViews[2] = (ImageView) findViewById(R.id.image_settings_2);
         imageViews[3] = (ImageView) findViewById(R.id.image_settings_3);
         imageViews[4] = (ImageView) findViewById(R.id.image_settings_4);
+        imageViews[5] = (ImageView) findViewById(R.id.image_settings_5);
         textCurrency = (TextView) findViewById(R.id.text_settings_currency);
         textRecommendations = (TextView) findViewById(R.id.text_settings_recommendations);
         textFill = (TextView) findViewById(R.id.text_settings_fill);
         textColor = (TextView) findViewById(R.id.text_settings_color);
+        textStorage = (TextView) findViewById(R.id.text_settings_storage);
         textExcel = (TextView) findViewById(R.id.text_settings_excel);
         imageCurrency = (ImageView) findViewById(R.id.image_settings_currency);
         imageRecommendation = (ImageView) findViewById(R.id.image_settings_recommendations);
         imageFill = (ImageView) findViewById(R.id.image_settings_fill);
         imageColor = (ImageView) findViewById(R.id.image_settings_color);
+        imageStorage = (ImageView) findViewById(R.id.image_settings_storage);
         imageExcel = (ImageView) findViewById(R.id.image_settings_excel);
         LinearLayout layoutColor = (LinearLayout) findViewById(R.id.layout_color);
         database = new DatabaseHelper(this);
@@ -119,6 +130,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         switchFill.setOnClickListener(this);
         findViewById(R.id.layout_fill).setOnClickListener(this);
         layoutColor.setOnClickListener(this);
+        findViewById(R.id.layout_storage).setOnClickListener(this);
         findViewById(R.id.layout_excel).setOnClickListener(this);
         refreshForColor(preference.getPreferenceString(KEY_COLOR));
         ActivityCompat.requestPermissions(SettingsActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
@@ -317,6 +329,17 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(getApplicationContext(), "Android 6.0 Marshmallow or higher required", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.layout_storage:
+                switch (preference.getPreferenceInt(KEY_STORAGE)) {
+                    case STORAGE_INTERNAL:
+                        preference.setPreference(KEY_STORAGE, STORAGE_EXTERNAL);
+                        break;
+                    case STORAGE_EXTERNAL:
+                        preference.setPreference(KEY_STORAGE, STORAGE_INTERNAL);
+                        break;
+                }
+                changeStorageSettings();
+                break;
             case R.id.layout_excel:
                 exportToExcel(database.getList());
                 AlertDialog.Builder builderOpenXls = new AlertDialog.Builder(this);
@@ -334,6 +357,11 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    private void changeStorageSettings() {
+        //change path
+        //change drawable
+    }
+
     private void refreshForColor(String color) {
         switch (color) {
             case COLOR_BLUE:
@@ -343,6 +371,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 imageFill.setImageDrawable(getDrawable(R.drawable.fill_blue));
                 imageColor.setImageDrawable(getDrawable(R.drawable.color_blue));
                 imageExcel.setImageDrawable(getDrawable(R.drawable.excel_blue));
+                drawableInternal = getDrawable(R.drawable.internal_storage_blue);
+                drawableExternal = getDrawable(R.drawable.external_storage_blue);
+                // reset image
                 break;
             case COLOR_YELLOW:
                 setColor(R.style.Theme_Yellow, R.color.colorPrimaryYellow, R.color.colorPrimaryDarkYellow);
@@ -351,6 +382,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 imageFill.setImageDrawable(getDrawable(R.drawable.fill_yellow));
                 imageColor.setImageDrawable(getDrawable(R.drawable.color_yellow));
                 imageExcel.setImageDrawable(getDrawable(R.drawable.excel_yellow));
+                drawableInternal = getDrawable(R.drawable.internal_storage_yellow);
+                drawableExternal = getDrawable(R.drawable.external_storage_yellow);
                 break;
             case COLOR_RED:
                 setColor(R.style.Theme_Red, R.color.colorPrimaryRed, R.color.colorPrimaryDarkRed);
@@ -359,6 +392,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 imageFill.setImageDrawable(getDrawable(R.drawable.fill_red));
                 imageColor.setImageDrawable(getDrawable(R.drawable.color_red));
                 imageExcel.setImageDrawable(getDrawable(R.drawable.excel_red));
+                drawableInternal = getDrawable(R.drawable.internal_storage_red);
+                drawableExternal = getDrawable(R.drawable.external_storage_red);
                 break;
             case COLOR_GREEN:
                 setColor(R.style.Theme_Green, R.color.colorPrimaryGreen, R.color.colorPrimaryDarkGreen);
@@ -367,6 +402,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 imageFill.setImageDrawable(getDrawable(R.drawable.fill_green));
                 imageColor.setImageDrawable(getDrawable(R.drawable.color_green));
                 imageExcel.setImageDrawable(getDrawable(R.drawable.excel_green));
+                drawableInternal = getDrawable(R.drawable.internal_storage_green);
+                drawableExternal = getDrawable(R.drawable.external_storage_green);
                 break;
             case COLOR_ORANGE:
                 setColor(R.style.Theme_Orange, R.color.colorPrimaryOrange, R.color.colorPrimaryDarkOrange);
@@ -375,6 +412,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 imageFill.setImageDrawable(getDrawable(R.drawable.fill_orange));
                 imageColor.setImageDrawable(getDrawable(R.drawable.color_orange));
                 imageExcel.setImageDrawable(getDrawable(R.drawable.excel_orange));
+                drawableInternal = getDrawable(R.drawable.internal_storage_orange);
+                drawableExternal = getDrawable(R.drawable.external_storage_orange);
                 break;
             case COLOR_BLACK:
                 setColor(R.style.Theme_Black, R.color.colorPrimaryBlack, R.color.colorPrimaryDarkBlack);
@@ -383,6 +422,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 imageFill.setImageDrawable(getDrawable(R.drawable.fill_black));
                 imageColor.setImageDrawable(getDrawable(R.drawable.color_black));
                 imageExcel.setImageDrawable(getDrawable(R.drawable.excel_black));
+                drawableInternal = getDrawable(R.drawable.internal_storage_black);
+                drawableExternal = getDrawable(R.drawable.external_storage_black);
                 break;
         }
     }
@@ -399,6 +440,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             textRecommendations.setTextColor(getResources().getColor(colorPrimary));
             textFill.setTextColor(getResources().getColor(colorPrimary));
             textColor.setTextColor(getResources().getColor(colorPrimary));
+            textStorage.setTextColor(getResources().getColor(colorPrimary));
             textExcel.setTextColor(getResources().getColor(colorPrimary));
             switchRecommendations.setTintColor(getResources().getColor(colorPrimary));
             switchFill.setTintColor(getResources().getColor(colorPrimary));

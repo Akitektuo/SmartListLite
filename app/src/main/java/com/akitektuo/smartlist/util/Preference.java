@@ -12,6 +12,8 @@ import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
 import static com.akitektuo.smartlist.util.Constant.KEY_INITIALIZE;
 import static com.akitektuo.smartlist.util.Constant.KEY_RECOMMENDATIONS;
 import static com.akitektuo.smartlist.util.Constant.KEY_SMART_PRICE;
+import static com.akitektuo.smartlist.util.Constant.KEY_STORAGE;
+import static com.akitektuo.smartlist.util.Constant.STORAGE_INTERNAL;
 
 /**
  * Created by AoD Akitektuo on 18-Mar-17.
@@ -67,5 +69,6 @@ public class Preference {
         setPreference(KEY_AUTO_FILL, true);
         setPreference(KEY_SMART_PRICE, 101);
         setPreference(KEY_COLOR, COLOR_BLUE);
+        setPreference(KEY_STORAGE, STORAGE_INTERNAL);
     }
 }
