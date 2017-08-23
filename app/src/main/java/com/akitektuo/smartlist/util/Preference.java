@@ -65,7 +65,7 @@ public class Preference {
         setPreference(KEY_CURRENCY, CURRENCY_RON);
         setPreference(KEY_RECOMMENDATIONS, true);
         setPreference(KEY_AUTO_FILL, true);
-        setPreference(KEY_SMART_PRICE, 100);
+        setPreference(KEY_SMART_PRICE, 101);
         setPreference(KEY_COLOR, COLOR_BLUE);
     }
 }

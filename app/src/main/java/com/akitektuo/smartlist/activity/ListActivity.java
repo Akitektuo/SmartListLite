@@ -21,6 +21,7 @@ import com.akitektuo.smartlist.database.DatabaseHelper;
 import com.akitektuo.smartlist.util.ListModel;
 import com.akitektuo.smartlist.util.Preference;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,12 +70,12 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         if (cursor.moveToFirst()) {
             do {
                 listModels.add(new ListModel(cursor.getInt(0), cursor.getString(1), preference.getPreferenceString(KEY_CURRENCY), cursor.getString(2), 1));
-                totalCount += Integer.parseInt(cursor.getString(1));
+                totalCount += Double.parseDouble(cursor.getString(1));
             } while (cursor.moveToNext());
         }
         listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
         list.setAdapter(new ListAdapter(this, listModels, textResult));
-        textResult.setText(getString(R.string.total, totalCount, preference.getPreferenceString(KEY_CURRENCY)));
+        textResult.setText(getString(R.string.total, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
     }
 
     private void deleteAllItems() {

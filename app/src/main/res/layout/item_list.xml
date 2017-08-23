@@ -8,40 +8,40 @@
         android:id="@+id/text_item_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="monospace"
         android:textColor="@color/colorPrimaryBlue"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:fontFamily="monospace"/>
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_item_value"
         android:layout_width="0dp"
-        android:layout_weight="0.3"
-        android:hint="@string/price"
-        android:inputType="number"
-        android:backgroundTint="@android:color/transparent"
         android:layout_height="wrap_content"
-        android:gravity="center"/>
+        android:layout_weight="0.3"
+        android:backgroundTint="@android:color/transparent"
+        android:gravity="center"
+        android:hint="@string/price"
+        android:inputType="numberDecimal" />
 
     <TextView
         android:id="@+id/text_item_currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:fontFamily="monospace"
         android:gravity="center"
-        android:fontFamily="monospace"/>
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <AutoCompleteTextView
         android:id="@+id/edit_auto_item_product"
         android:layout_width="0dp"
-        android:layout_weight="0.7"
-        android:hint="@string/item"
-        android:backgroundTint="@android:color/transparent"
         android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:backgroundTint="@android:color/transparent"
         android:completionThreshold="1"
-        android:imeOptions="actionDone"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:hint="@string/item"
+        android:imeOptions="actionDone" />
 
     <Button
         android:id="@+id/button_save"

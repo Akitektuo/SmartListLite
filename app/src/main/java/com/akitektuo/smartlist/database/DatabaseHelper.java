@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.DecimalFormat;
+
 import static com.akitektuo.smartlist.util.Constant.KEY_SMART_PRICE;
 import static com.akitektuo.smartlist.util.Constant.PRICE_LIMIT;
 import static com.akitektuo.smartlist.util.Constant.handler;
@@ -99,11 +101,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         getWritableDatabase().update(DatabaseContract.ListContractEntry.TABLE_NAME, contentValues, selection, selectionArgs);
     }
 
-    private void addUsage(SQLiteDatabase database, String products, String prices) {
+    private void addUsage(String products, String prices) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseContract.UsageContractEntry.COLUMN_NAME_PRODUCTS, products);
         contentValues.put(DatabaseContract.UsageContractEntry.COLUMN_NAME_PRICES, prices);
-        database.insert(DatabaseContract.UsageContractEntry.TABLE_NAME, null, contentValues);
+        getWritableDatabase().insert(DatabaseContract.UsageContractEntry.TABLE_NAME, null, contentValues);
     }
 
     public Cursor getUsage(SQLiteDatabase database) {
@@ -112,11 +114,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return database.query(DatabaseContract.UsageContractEntry.TABLE_NAME, list, null, null, null, null, null);
     }
 
-    private String getPricesForProducts(SQLiteDatabase database, String products) {
+    private String getPricesForProducts(String products) {
         String[] results = {DatabaseContract.UsageContractEntry.COLUMN_NAME_PRICES};
         String selection = DatabaseContract.UsageContractEntry.COLUMN_NAME_PRODUCTS + " LIKE ?";
         String[] selectionArgs = {products};
-        Cursor cursor = database.query(DatabaseContract.UsageContractEntry.TABLE_NAME, results, selection, selectionArgs, null, null, null);
+        Cursor cursor = getReadableDatabase().query(DatabaseContract.UsageContractEntry.TABLE_NAME, results, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
             return cursor.getString(0);
         }
@@ -124,11 +126,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return "";
     }
 
-    private boolean isProduct(SQLiteDatabase database, String products) {
+    private boolean isProduct(String products) {
         String[] results = {DatabaseContract.UsageContractEntry.COLUMN_NAME_PRODUCTS};
         String selection = DatabaseContract.UsageContractEntry.COLUMN_NAME_PRODUCTS + " LIKE ?";
         String[] selectionArgs = {products};
-        Cursor cursor = database.query(DatabaseContract.UsageContractEntry.TABLE_NAME, results, selection, selectionArgs, null, null, null);
+        Cursor cursor = getReadableDatabase().query(DatabaseContract.UsageContractEntry.TABLE_NAME, results, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
             return true;
         }
@@ -136,59 +138,61 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    private void updateUsage(SQLiteDatabase database, String products, String prices) {
+    private void updateUsage(String products, String prices) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseContract.UsageContractEntry.COLUMN_NAME_PRICES, prices);
         String selection = DatabaseContract.UsageContractEntry.COLUMN_NAME_PRODUCTS + " LIKE ?";
         String[] selectionArgs = {products};
-        database.update(DatabaseContract.UsageContractEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+        getWritableDatabase().update(DatabaseContract.UsageContractEntry.TABLE_NAME, contentValues, selection, selectionArgs);
     }
 
-    public int getCommonPriceForProduct(SQLiteDatabase database, String product) {
-        String[] pricesRaw = getPricesForProducts(database, product).split("_");
-        int[] prices = new int[preference.getPreferenceInt(KEY_SMART_PRICE)];
-        int priceMax = Integer.MIN_VALUE, res = 0;
+    public double getCommonPriceForProduct(String product) {
+        String[] pricesRaw = getPricesForProducts(product).split("_");
+        double[] prices = new double[preference.getPreferenceInt(KEY_SMART_PRICE)];
+        double priceMax = Integer.MIN_VALUE, res = 0;
         for (int i = 0; i < prices.length; i++) {
-            prices[i] = Integer.parseInt(pricesRaw[i]);
+            prices[i] = Double.parseDouble(pricesRaw[i]);
             priceMax = Math.max(priceMax, prices[i]);
             if (priceMax == prices[i]) {
                 res = i;
             }
         }
-        return res;
+        return (res);
     }
 
-    private void addProduct(SQLiteDatabase database, String product, String price) {
+    private void addProduct(String product, String price) {
+        int roundedPrice = (int) Math.ceil(Double.parseDouble(price));
         int[] pricesGenerate = new int[PRICE_LIMIT];
         String stringBuilder = "";
         for (int i = 0; i < pricesGenerate.length; i++) {
             pricesGenerate[i] = 0;
-            if (i == Integer.parseInt(price)) {
+            if (i == roundedPrice) {
                 pricesGenerate[i]++;
             }
-            stringBuilder = stringBuilder + pricesGenerate[i] + "_";
+            stringBuilder = stringBuilder + new DecimalFormat("0.#").format(pricesGenerate[i]) + "_";
         }
-        addUsage(database, product, stringBuilder.substring(0, stringBuilder.length() - 1));
+        addUsage(product, stringBuilder.substring(0, stringBuilder.length() - 1));
     }
 
-    public void updatePrices(final SQLiteDatabase database, final String products, final String price) {
-        if (Integer.parseInt(price) > 0) {
+    public void updatePrices(final String products, final String price) {
+        final int roundedPrice = (int) Math.ceil(Double.parseDouble(price));
+        if (roundedPrice > 0) {
             handler.post(new Runnable() {
                 public void run() {
-                    if (isProduct(database, products)) {
+                    if (isProduct(products)) {
                         String stringBuilder = "";
-                        String[] pricesRaw = getPricesForProducts(database, products).split("_");
+                        String[] pricesRaw = getPricesForProducts(products).split("_");
                         int[] pricesExisting = new int[preference.getPreferenceInt(KEY_SMART_PRICE)];
                         for (int i = 0; i < pricesExisting.length; i++) {
                             pricesExisting[i] = Integer.parseInt(pricesRaw[i]);
-                            if (pricesExisting[i] == Integer.parseInt(price)) {
+                            if (pricesExisting[i] == roundedPrice) {
                                 pricesExisting[i]++;
                             }
                             stringBuilder = stringBuilder + pricesExisting[i] + "_";
                         }
-                        updateUsage(database, products, stringBuilder);
+                        updateUsage(products, stringBuilder);
                     } else {
-                        addProduct(database, products, price);
+                        addProduct(products, price);
                     }
                 }
             });

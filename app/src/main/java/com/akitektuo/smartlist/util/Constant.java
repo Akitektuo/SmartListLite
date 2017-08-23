@@ -39,6 +39,6 @@ public class Constant {
     public static final String KEY_COLOR = "color";
 
     public static Preference preference;
-    public static int totalCount;
+    public static double totalCount;
 
 }
