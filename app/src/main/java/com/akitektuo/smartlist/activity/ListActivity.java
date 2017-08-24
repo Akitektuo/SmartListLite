@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import static com.akitektuo.smartlist.util.Constant.COLOR_YELLOW;
 import static com.akitektuo.smartlist.util.Constant.KEY_COLOR;
 import static com.akitektuo.smartlist.util.Constant.KEY_CREATED;
 import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
+import static com.akitektuo.smartlist.util.Constant.KEY_NIGHT;
 import static com.akitektuo.smartlist.util.Constant.handler;
 import static com.akitektuo.smartlist.util.Constant.preference;
 import static com.akitektuo.smartlist.util.Constant.totalCount;
@@ -45,6 +47,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textResult;
     private RelativeLayout layoutHeader;
     private List<ListModel> listModels;
+    private RelativeLayout layoutMain;
+    private TextView textTitle;
+    private Button buttonSettings;
+    private Button buttonDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +67,12 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         list.setLayoutManager(linearLayoutManager);
         textResult = (TextView) findViewById(R.id.text_result);
         layoutHeader = (RelativeLayout) findViewById(R.id.layout_list_header);
-        findViewById(R.id.button_delete_all).setOnClickListener(this);
-        findViewById(R.id.button_settings).setOnClickListener(this);
+        layoutMain = (RelativeLayout) findViewById(R.id.layout_main);
+        textTitle = (TextView) findViewById(R.id.text_title_main);
+        buttonSettings = (Button) findViewById(R.id.button_settings);
+        buttonDelete = (Button) findViewById(R.id.button_delete_all);
+        buttonSettings.setOnClickListener(this);
+        buttonDelete.setOnClickListener(this);
         refreshForColor(preference.getPreferenceString(KEY_COLOR));
         totalCount = 0;
         listModels = new ArrayList<>();
@@ -144,14 +154,27 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 setColor(R.style.Theme_Black, R.color.colorPrimaryBlack, R.color.colorPrimaryDarkBlack);
                 break;
         }
+        if (preference.getPreferenceBoolean(KEY_NIGHT)) {
+            buttonSettings.setBackground(getDrawable(R.drawable.settings_black));
+            buttonDelete.setBackground(getDrawable(R.drawable.delete_all_black));
+            layoutMain.setBackgroundColor(getResources().getColor(R.color.colorPrimaryBlack));
+            textTitle.setTextColor(getResources().getColor(R.color.colorPrimaryDarkBlack));
+            textResult.setTextColor(getResources().getColor(R.color.colorPrimaryDarkBlack));
+        } else {
+            buttonSettings.setBackground(getDrawable(R.drawable.settings_white));
+            buttonDelete.setBackground(getDrawable(R.drawable.delete_all_white));
+            layoutMain.setBackgroundColor(getResources().getColor(R.color.background));
+            textTitle.setTextColor(getResources().getColor(R.color.white));
+            textResult.setTextColor(getResources().getColor(R.color.white));
+        }
     }
 
     private void setColor(int theme, int colorPrimary, int colorPrimaryDark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             super.setTheme(theme);
-            getWindow().setStatusBarColor(getColor(colorPrimaryDark));
-            layoutHeader.setBackgroundColor(getResources().getColor(colorPrimary));
-            textResult.setBackgroundColor(getResources().getColor(colorPrimary));
         }
+        getWindow().setStatusBarColor(getResources().getColor(colorPrimaryDark));
+        layoutHeader.setBackgroundColor(getResources().getColor(colorPrimary));
+        textResult.setBackgroundColor(getResources().getColor(colorPrimary));
     }
 }

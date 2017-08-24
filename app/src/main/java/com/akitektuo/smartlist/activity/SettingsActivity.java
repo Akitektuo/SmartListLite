@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,6 +64,7 @@ import static com.akitektuo.smartlist.util.Constant.CURRENCY_USD;
 import static com.akitektuo.smartlist.util.Constant.KEY_AUTO_FILL;
 import static com.akitektuo.smartlist.util.Constant.KEY_COLOR;
 import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
+import static com.akitektuo.smartlist.util.Constant.KEY_NIGHT;
 import static com.akitektuo.smartlist.util.Constant.KEY_RECOMMENDATIONS;
 import static com.akitektuo.smartlist.util.Constant.KEY_SMART_PRICE;
 import static com.akitektuo.smartlist.util.Constant.KEY_STORAGE;
@@ -75,9 +77,13 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
     private SwitchButton switchRecommendations;
     private SwitchButton switchFill;
+    private SwitchButton switchColor;
     private DatabaseHelper database;
     private RelativeLayout layoutHeader;
+    private LinearLayout layoutMain;
     private ImageView[] imageViews;
+    private List<TextView> textViews;
+    private TextView textSettings;
     private TextView textCurrency;
     private TextView textRecommendations;
     private TextView textFill;
@@ -93,12 +99,15 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     private Drawable drawableInternal;
     private Drawable drawableExternal;
     private File path;
+    private Button buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         layoutHeader = (RelativeLayout) findViewById(R.id.layout_settings_header);
+        layoutMain = (LinearLayout) findViewById(R.id.layout_main_settings);
+        buttonBack = (Button) findViewById(R.id.button_back);
         imageViews = new ImageView[6];
         imageViews[0] = (ImageView) findViewById(R.id.image_settings_0);
         imageViews[1] = (ImageView) findViewById(R.id.image_settings_1);
@@ -106,6 +115,14 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         imageViews[3] = (ImageView) findViewById(R.id.image_settings_3);
         imageViews[4] = (ImageView) findViewById(R.id.image_settings_4);
         imageViews[5] = (ImageView) findViewById(R.id.image_settings_5);
+        textViews = new ArrayList<>();
+        textViews.add((TextView) findViewById(R.id.text_settings_0));
+        textViews.add((TextView) findViewById(R.id.text_settings_1));
+        textViews.add((TextView) findViewById(R.id.text_settings_2));
+        textViews.add((TextView) findViewById(R.id.text_settings_3));
+        textViews.add((TextView) findViewById(R.id.text_settings_4));
+        textViews.add((TextView) findViewById(R.id.text_settings_5));
+        textSettings = (TextView) findViewById(R.id.text_title_settings);
         textCurrency = (TextView) findViewById(R.id.text_settings_currency);
         textRecommendations = (TextView) findViewById(R.id.text_settings_recommendations);
         textFill = (TextView) findViewById(R.id.text_settings_fill);
@@ -120,7 +137,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         imageExcel = (ImageView) findViewById(R.id.image_settings_excel);
         LinearLayout layoutColor = (LinearLayout) findViewById(R.id.layout_color);
         database = new DatabaseHelper(this);
-        findViewById(R.id.button_back).setOnClickListener(this);
+        buttonBack.setOnClickListener(this);
         findViewById(R.id.layout_currency).setOnClickListener(this);
         switchRecommendations = (SwitchButton) findViewById(R.id.switch_settings_recommendations);
         switchRecommendations.setChecked(preference.getPreferenceBoolean(KEY_RECOMMENDATIONS));
@@ -130,15 +147,14 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         switchFill.setChecked(preference.getPreferenceBoolean(KEY_AUTO_FILL));
         switchFill.setOnClickListener(this);
         findViewById(R.id.layout_fill).setOnClickListener(this);
+        switchColor = (SwitchButton) findViewById(R.id.switch_settings_color);
+        switchColor.setChecked(preference.getPreferenceBoolean(KEY_NIGHT));
+        switchColor.setOnClickListener(this);
         layoutColor.setOnClickListener(this);
         findViewById(R.id.layout_storage).setOnClickListener(this);
         findViewById(R.id.layout_excel).setOnClickListener(this);
         refreshForColor(preference.getPreferenceString(KEY_COLOR));
-        ActivityCompat.requestPermissions(SettingsActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            imageViews[2].setVisibility(View.GONE);
-            layoutColor.setVisibility(View.GONE);
-        }
+        ActivityCompat.requestPermissions(SettingsActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
     }
 
     @Override
@@ -290,45 +306,61 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 builderFill.setNeutralButton("Cancel", null);
                 builderFill.show();
                 break;
-            case R.id.layout_color:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    AlertDialog.Builder builderColor = new AlertDialog.Builder(this);
-                    builderColor.setTitle("Select color");
-                    builderColor.setItems(R.array.color, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            String color = null;
-                            switch (i) {
-                                case 0:
-                                    color = COLOR_BLUE;
-                                    break;
-                                case 1:
-                                    color = COLOR_YELLOW;
-                                    break;
-                                case 2:
-                                    color = COLOR_RED;
-                                    break;
-                                case 3:
-                                    color = COLOR_GREEN;
-                                    break;
-                                case 4:
-                                    color = COLOR_ORANGE;
-                                    break;
-                                case 5:
-                                    color = COLOR_BLACK;
-                                    break;
-                            }
-                            refreshForColor(color);
-                            preference.setPreference(KEY_COLOR, color);
-                            Toast.makeText(getApplicationContext(), "Color set to " + color + ".", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    builderColor.setNeutralButton("Cancel", null);
-                    AlertDialog alertDialogColor = builderColor.create();
-                    alertDialogColor.show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Android 6.0 Marshmallow or higher required", Toast.LENGTH_SHORT).show();
+
+            case R.id.switch_settings_color:
+                if (preference.getPreferenceString(KEY_COLOR).equals("black")) {
+                    switchColor.setChecked(false);
+                    Toast.makeText(this, "Please change the color for night mode", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                preference.setPreference(KEY_NIGHT, switchColor.isChecked());
+                refreshForColor(preference.getPreferenceString(KEY_COLOR));
+                if (switchColor.isChecked()) {
+                    Toast.makeText(this, "Switched to night mode", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Switched to day mode", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.layout_color:
+                AlertDialog.Builder builderColor = new AlertDialog.Builder(this);
+                builderColor.setTitle("Select color");
+                builderColor.setItems(R.array.color, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String color = null;
+                        switch (i) {
+                            case 0:
+                                color = COLOR_BLUE;
+                                break;
+                            case 1:
+                                color = COLOR_YELLOW;
+                                break;
+                            case 2:
+                                color = COLOR_RED;
+                                break;
+                            case 3:
+                                color = COLOR_GREEN;
+                                break;
+                            case 4:
+                                color = COLOR_ORANGE;
+                                break;
+                            case 5:
+                                color = COLOR_BLACK;
+                                break;
+                        }
+                        if (preference.getPreferenceBoolean(KEY_NIGHT) && i == 5) {
+                            switchColor.setChecked(false);
+                            preference.setPreference(KEY_NIGHT, switchColor.isChecked());
+                            Toast.makeText(getBaseContext(), "Switched to day mode", Toast.LENGTH_SHORT).show();
+                        }
+                        refreshForColor(color);
+                        preference.setPreference(KEY_COLOR, color);
+                        Toast.makeText(getApplicationContext(), "Color set to " + color + ".", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builderColor.setNeutralButton("Cancel", null);
+                AlertDialog alertDialogColor = builderColor.create();
+                alertDialogColor.show();
                 break;
             case R.id.layout_storage:
                 if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -390,7 +422,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 imageExcel.setImageDrawable(getDrawable(R.drawable.excel_blue));
                 drawableInternal = getDrawable(R.drawable.internal_storage_blue);
                 drawableExternal = getDrawable(R.drawable.external_storage_blue);
-                // reset image
                 break;
             case COLOR_YELLOW:
                 setColor(R.style.Theme_Yellow, R.color.colorPrimaryYellow, R.color.colorPrimaryDarkYellow);
@@ -444,25 +475,41 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 break;
         }
         changeStorageSettings();
+        if (preference.getPreferenceBoolean(KEY_NIGHT)) {
+            buttonBack.setBackground(getDrawable(R.drawable.back_black));
+            layoutMain.setBackgroundColor(getResources().getColor(R.color.colorPrimaryBlack));
+            textSettings.setTextColor(getResources().getColor(R.color.colorPrimaryDarkBlack));
+            for (TextView textView : textViews) {
+                textView.setTextColor(getResources().getColor(R.color.trackBasic));
+            }
+        } else {
+            buttonBack.setBackground(getDrawable(R.drawable.back_white));
+            layoutMain.setBackgroundColor(getResources().getColor(R.color.background));
+            textSettings.setTextColor(getResources().getColor(R.color.white));
+            for (TextView textView : textViews) {
+                textView.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
+            }
+        }
     }
 
     private void setColor(int theme, int colorPrimary, int colorPrimaryDark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             super.setTheme(theme);
-            getWindow().setStatusBarColor(getColor(colorPrimaryDark));
-            layoutHeader.setBackgroundColor(getResources().getColor(colorPrimary));
-            for (ImageView x : imageViews) {
-                x.setBackgroundColor(getResources().getColor(colorPrimary));
-            }
-            textCurrency.setTextColor(getResources().getColor(colorPrimary));
-            textRecommendations.setTextColor(getResources().getColor(colorPrimary));
-            textFill.setTextColor(getResources().getColor(colorPrimary));
-            textColor.setTextColor(getResources().getColor(colorPrimary));
-            textStorage.setTextColor(getResources().getColor(colorPrimary));
-            textExcel.setTextColor(getResources().getColor(colorPrimary));
-            switchRecommendations.setTintColor(getResources().getColor(colorPrimary));
-            switchFill.setTintColor(getResources().getColor(colorPrimary));
         }
+        getWindow().setStatusBarColor(getResources().getColor(colorPrimaryDark));
+        layoutHeader.setBackgroundColor(getResources().getColor(colorPrimary));
+        for (ImageView x : imageViews) {
+            x.setBackgroundColor(getResources().getColor(colorPrimary));
+        }
+        textCurrency.setTextColor(getResources().getColor(colorPrimary));
+        textRecommendations.setTextColor(getResources().getColor(colorPrimary));
+        textFill.setTextColor(getResources().getColor(colorPrimary));
+        textColor.setTextColor(getResources().getColor(colorPrimary));
+        textStorage.setTextColor(getResources().getColor(colorPrimary));
+        textExcel.setTextColor(getResources().getColor(colorPrimary));
+        switchRecommendations.setTintColor(getResources().getColor(colorPrimary));
+        switchFill.setTintColor(getResources().getColor(colorPrimary));
+        switchColor.setTintColor(getResources().getColor(colorPrimary));
     }
 
     private void exportToExcel(Cursor cursor) {
@@ -519,8 +566,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         try {
             startActivity(intent);
-        }
-        catch (ActivityNotFoundException e) {
+        } catch (ActivityNotFoundException e) {
             Toast.makeText(getApplicationContext(), "No Application Available to View Excel", Toast.LENGTH_SHORT).show();
         }
     }

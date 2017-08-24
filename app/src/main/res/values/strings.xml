@@ -11,7 +11,7 @@
     <string name="fill">Smart Fill</string>
     <string name="fill_status">When the price field is empty, type in the price automatically</string>
     <string name="color">Color</string>
-    <string name="color_status">Change the colors of Smart List</string>
+    <string name="color_status">Change the colors of Smart List or turn on/off night mode</string>
     <string name="excel">Export Excel</string>
     <string name="excel_status">Export my list as an Microsoft Excel Document which I can find in Internal Storage in the folder Smart List</string>
     <string name="fill_limit">Set the limit of Smart Fill</string>

@@ -22,4 +22,5 @@
     <color name="background">#FAFAFA</color>
     <color name="thumbBasic">#ECECEC</color>
     <color name="trackBasic">#888888</color>
+    <color name="hint">#663300</color>
 </resources>
