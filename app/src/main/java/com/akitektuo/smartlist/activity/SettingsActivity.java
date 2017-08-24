@@ -92,13 +92,14 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     private ImageView imageStorage;
     private Drawable drawableInternal;
     private Drawable drawableExternal;
+    private File path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         layoutHeader = (RelativeLayout) findViewById(R.id.layout_settings_header);
-        imageViews = new ImageView[5];
+        imageViews = new ImageView[6];
         imageViews[0] = (ImageView) findViewById(R.id.image_settings_0);
         imageViews[1] = (ImageView) findViewById(R.id.image_settings_1);
         imageViews[2] = (ImageView) findViewById(R.id.image_settings_2);
@@ -330,15 +331,23 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.layout_storage:
-                switch (preference.getPreferenceInt(KEY_STORAGE)) {
-                    case STORAGE_INTERNAL:
-                        preference.setPreference(KEY_STORAGE, STORAGE_EXTERNAL);
-                        break;
-                    case STORAGE_EXTERNAL:
-                        preference.setPreference(KEY_STORAGE, STORAGE_INTERNAL);
-                        break;
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                    String storageLocation = "Storage switched to %1$s";
+                    switch (preference.getPreferenceInt(KEY_STORAGE)) {
+                        case STORAGE_INTERNAL:
+                            preference.setPreference(KEY_STORAGE, STORAGE_EXTERNAL);
+                            storageLocation = String.format(storageLocation, "external storage");
+                            break;
+                        case STORAGE_EXTERNAL:
+                            preference.setPreference(KEY_STORAGE, STORAGE_INTERNAL);
+                            storageLocation = String.format(storageLocation, "internal storage");
+                            break;
+                    }
+                    Toast.makeText(this, storageLocation, Toast.LENGTH_SHORT).show();
+                    changeStorageSettings();
+                } else {
+                    Toast.makeText(this, "Micro SD card not detected", Toast.LENGTH_SHORT).show();
                 }
-                changeStorageSettings();
                 break;
             case R.id.layout_excel:
                 exportToExcel(database.getList());
@@ -358,8 +367,16 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     }
 
     private void changeStorageSettings() {
-        //change path
-        //change drawable
+        switch (preference.getPreferenceInt(KEY_STORAGE)) {
+            case STORAGE_INTERNAL:
+                imageStorage.setImageDrawable(drawableInternal);
+                path = Environment.getExternalStorageDirectory();
+                break;
+            case STORAGE_EXTERNAL:
+                imageStorage.setImageDrawable(drawableExternal);
+                path = Environment.getExternalStorageDirectory();
+                break;
+        }
     }
 
     private void refreshForColor(String color) {
@@ -426,6 +443,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 drawableExternal = getDrawable(R.drawable.external_storage_black);
                 break;
         }
+        changeStorageSettings();
     }
 
     private void setColor(int theme, int colorPrimary, int colorPrimaryDark) {
@@ -448,10 +466,10 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     }
 
     private void exportToExcel(Cursor cursor) {
-        File file = new File(Environment.getExternalStorageDirectory() + File.separator + "SmartList", "SmartList_" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".xls");
+        File file = new File(path + File.separator + "SmartList", "SmartList_" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".xls");
         if (!file.exists()) {
             if (file.getParentFile().mkdirs()) {
-                Toast.makeText(getApplicationContext(), "File failed.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Smart list failed to generate the file, please check the permissions or switch to internal storage.", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -495,9 +513,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     }
 
     private void openGeneratedFile() {
-        File path = new File(Environment.getExternalStorageDirectory() + File.separator + "SmartList", "SmartList_" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".xls");
+        File file = new File(path + File.separator + "SmartList", "SmartList_" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".xls");
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(path), "application/vnd.ms-excel");
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.ms-excel");
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         try {
             startActivity(intent);

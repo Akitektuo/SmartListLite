@@ -75,6 +75,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         }
         listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
         list.setAdapter(new ListAdapter(this, listModels, textResult));
+        list.smoothScrollToPosition(listModels.size());
         textResult.setText(getString(R.string.total, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
     }
 
