@@ -223,7 +223,6 @@
                     android:id="@+id/layout_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/switch_settings_color"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -260,8 +259,62 @@
 
                 </LinearLayout>
 
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/image_settings_3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimaryDarkBlue" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:id="@+id/layout_night"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/switch_settings_night"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/image_settings_night"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/color_blue" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/text_settings_night"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night"
+                            android:textColor="@color/colorPrimaryBlue"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_settings_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/night_status" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
                 <com.kyleduo.switchbutton.SwitchButton
-                    android:id="@+id/switch_settings_color"
+                    android:id="@+id/switch_settings_night"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -271,7 +324,7 @@
             </RelativeLayout>
 
             <ImageView
-                android:id="@+id/image_settings_3"
+                android:id="@+id/image_settings_4"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />
@@ -306,7 +359,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/text_settings_4"
+                        android:id="@+id/text_settings_5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -317,7 +370,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/image_settings_4"
+                android:id="@+id/image_settings_5"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />
@@ -352,7 +405,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/text_settings_5"
+                        android:id="@+id/text_settings_6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -363,7 +416,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/image_settings_5"
+                android:id="@+id/image_settings_6"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />

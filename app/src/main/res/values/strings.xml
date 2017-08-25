@@ -19,4 +19,6 @@
     <string name="limit">Limit</string>
     <string name="storage">Export location</string>
     <string name="storage_status">Choose the export location to internal or external storage for the Microsoft Excel Document</string>
+    <string name="night">Night Mode</string>
+    <string name="night_status">Switch between day mode and night mode</string>
 </resources>

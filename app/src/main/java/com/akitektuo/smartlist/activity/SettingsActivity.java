@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -73,7 +74,7 @@ import static com.akitektuo.smartlist.util.Constant.STORAGE_EXTERNAL;
 import static com.akitektuo.smartlist.util.Constant.STORAGE_INTERNAL;
 import static com.akitektuo.smartlist.util.Constant.preference;
 
-public class SettingsActivity extends Activity implements View.OnClickListener {
+public class SettingsActivity extends Activity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private SwitchButton switchRecommendations;
     private SwitchButton switchFill;
@@ -141,15 +142,15 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.layout_currency).setOnClickListener(this);
         switchRecommendations = (SwitchButton) findViewById(R.id.switch_settings_recommendations);
         switchRecommendations.setChecked(preference.getPreferenceBoolean(KEY_RECOMMENDATIONS));
-        switchRecommendations.setOnClickListener(this);
+        switchRecommendations.setOnCheckedChangeListener(this);
         findViewById(R.id.layout_recommendations).setOnClickListener(this);
         switchFill = (SwitchButton) findViewById(R.id.switch_settings_fill);
         switchFill.setChecked(preference.getPreferenceBoolean(KEY_AUTO_FILL));
-        switchFill.setOnClickListener(this);
+        switchFill.setOnCheckedChangeListener(this);
         findViewById(R.id.layout_fill).setOnClickListener(this);
-        switchColor = (SwitchButton) findViewById(R.id.switch_settings_color);
+        switchColor = (SwitchButton) findViewById(R.id.switch_settings_night);
         switchColor.setChecked(preference.getPreferenceBoolean(KEY_NIGHT));
-        switchColor.setOnClickListener(this);
+        switchColor.setOnCheckedChangeListener(this);
         layoutColor.setOnClickListener(this);
         findViewById(R.id.layout_storage).setOnClickListener(this);
         findViewById(R.id.layout_excel).setOnClickListener(this);
@@ -226,9 +227,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 AlertDialog alertDialogCurrency = builderCurrency.create();
                 alertDialogCurrency.show();
                 break;
-            case R.id.switch_settings_recommendations:
-                preference.setPreference(KEY_RECOMMENDATIONS, switchRecommendations.isChecked());
-                break;
             case R.id.layout_recommendations:
                 AlertDialog.Builder builderRecommendations = new AlertDialog.Builder(this);
                 builderRecommendations.setTitle("Select product to delete");
@@ -250,9 +248,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 builderRecommendations.setNeutralButton("Cancel", null);
                 AlertDialog alertDialogRecommendations = builderRecommendations.create();
                 alertDialogRecommendations.show();
-                break;
-            case R.id.switch_settings_fill:
-                preference.setPreference(KEY_AUTO_FILL, switchFill.isChecked());
                 break;
             case R.id.layout_fill:
                 AlertDialog.Builder builderFill = new AlertDialog.Builder(this);
@@ -305,21 +300,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 });
                 builderFill.setNeutralButton("Cancel", null);
                 builderFill.show();
-                break;
-
-            case R.id.switch_settings_color:
-                if (preference.getPreferenceString(KEY_COLOR).equals("black")) {
-                    switchColor.setChecked(false);
-                    Toast.makeText(this, "Please change the color for night mode", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                preference.setPreference(KEY_NIGHT, switchColor.isChecked());
-                refreshForColor(preference.getPreferenceString(KEY_COLOR));
-                if (switchColor.isChecked()) {
-                    Toast.makeText(this, "Switched to night mode", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Switched to day mode", Toast.LENGTH_SHORT).show();
-                }
                 break;
             case R.id.layout_color:
                 AlertDialog.Builder builderColor = new AlertDialog.Builder(this);
@@ -568,6 +548,32 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(getApplicationContext(), "No Application Available to View Excel", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
+            case R.id.switch_settings_recommendations:
+                preference.setPreference(KEY_RECOMMENDATIONS, isChecked);
+                break;
+            case R.id.switch_settings_fill:
+                preference.setPreference(KEY_AUTO_FILL, isChecked);
+                break;
+            case R.id.switch_settings_night:
+                if (preference.getPreferenceString(KEY_COLOR).equals("black")) {
+                    switchColor.setChecked(false);
+                    Toast.makeText(this, "Please change the color for night mode", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                preference.setPreference(KEY_NIGHT, isChecked);
+                refreshForColor(preference.getPreferenceString(KEY_COLOR));
+                if (isChecked) {
+                    Toast.makeText(this, "Switched to night mode", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Switched to day mode", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 }
