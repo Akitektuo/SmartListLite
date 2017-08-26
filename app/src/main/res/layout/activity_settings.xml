@@ -159,6 +159,58 @@
                 android:padding="16dp">
 
                 <LinearLayout
+                    android:id="@+id/layout_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/image_settings_products"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/product_blue" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/text_settings_products"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/products"
+                            android:textColor="@color/colorPrimaryBlue"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_settings_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/products_status" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/image_settings_2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimaryDarkBlue" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <LinearLayout
                     android:id="@+id/layout_fill"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -188,7 +240,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/text_settings_2"
+                            android:id="@+id/text_settings_3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
@@ -209,7 +261,59 @@
             </RelativeLayout>
 
             <ImageView
-                android:id="@+id/image_settings_2"
+                android:id="@+id/image_settings_3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimaryDarkBlue" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:id="@+id/layout_limit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/image_settings_limit"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/limit_blue" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/text_settings_limit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/limit"
+                            android:textColor="@color/colorPrimaryBlue"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_settings_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/limit_status" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/image_settings_4"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />
@@ -248,7 +352,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/text_settings_3"
+                            android:id="@+id/text_settings_5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
@@ -262,7 +366,7 @@
             </RelativeLayout>
 
             <ImageView
-                android:id="@+id/image_settings_3"
+                android:id="@+id/image_settings_5"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />
@@ -285,7 +389,7 @@
                         android:layout_height="32dp"
                         android:layout_gravity="center"
                         android:layout_marginEnd="16dp"
-                        android:src="@drawable/color_blue" />
+                        android:src="@drawable/night_blue" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -302,7 +406,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/text_settings_4"
+                            android:id="@+id/text_settings_6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
@@ -324,7 +428,7 @@
             </RelativeLayout>
 
             <ImageView
-                android:id="@+id/image_settings_4"
+                android:id="@+id/image_settings_6"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />
@@ -359,7 +463,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/text_settings_5"
+                        android:id="@+id/text_settings_7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -370,7 +474,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/image_settings_5"
+                android:id="@+id/image_settings_7"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />
@@ -405,7 +509,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/text_settings_6"
+                        android:id="@+id/text_settings_8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -416,10 +520,66 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/image_settings_6"
+                android:id="@+id/image_settings_8"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:id="@+id/layout_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/switch_settings_total"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/image_settings_total"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/total_blue" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/text_settings_total"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total"
+                            android:textColor="@color/colorPrimaryBlue"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_settings_9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/total_status" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/switch_settings_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:kswTintColor="@color/colorAccentBlue" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 

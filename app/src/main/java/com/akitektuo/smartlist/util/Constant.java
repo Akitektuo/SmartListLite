@@ -42,10 +42,12 @@ public class Constant {
     public static final String KEY_CURRENCY = "currency";
     public static final String KEY_RECOMMENDATIONS = "recommendations";
     public static final String KEY_AUTO_FILL = "auto_fill";
+    public static final String KEY_AUTO_FILL_WANTED = "auto_fill_wanted";
     public static final String KEY_SMART_PRICE = "smart_price";
     public static final String KEY_COLOR = "color";
     public static final String KEY_NIGHT = "night";
     public static final String KEY_STORAGE = "storage";
+    public static final String KEY_TOTAL = "total";
 
     public static Preference preference;
     public static double totalCount;

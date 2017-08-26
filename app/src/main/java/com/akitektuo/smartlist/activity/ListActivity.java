@@ -86,7 +86,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
         list.setAdapter(new ListAdapter(this, listModels, textResult));
         list.smoothScrollToPosition(listModels.size());
-        textResult.setText(getString(R.string.total, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
+        textResult.setText(getString(R.string.total_price, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
     }
 
     private void deleteAllItems() {
@@ -116,7 +116,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                                 listModels.clear();
                                 listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
                                 totalCount = 0;
-                                textResult.setText(getBaseContext().getString(R.string.total, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
+                                textResult.setText(getBaseContext().getString(R.string.total_price, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
                                 list.getAdapter().notifyDataSetChanged();
                             }
                         }, 500);

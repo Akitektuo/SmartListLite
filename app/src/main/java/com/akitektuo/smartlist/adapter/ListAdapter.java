@@ -120,7 +120,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         listModels.remove(holder.getAdapterPosition());
                         updateDatabase(holder.getAdapterPosition());
                         notifyDataSetChanged();
-                        textTotal.setText(context.getString(R.string.total, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
+                        textTotal.setText(context.getString(R.string.total_price, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
                     }
                 });
                 builderDelete.setNegativeButton("Cancel", null);
@@ -151,14 +151,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                                 listModels.set(listModels.size() - 1, new ListModel(lastItem, value, preference.getPreferenceString(KEY_CURRENCY), product, 1));
                                 listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
                                 notifyDataSetChanged();
-                                textTotal.setText(context.getString(R.string.total, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
+                                textTotal.setText(context.getString(R.string.total_price, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
                                 Toast.makeText(context, "Item saved...", Toast.LENGTH_SHORT).show();
                             } else {
                                 database.updateList(holder.getAdapterPosition() + 1, listModel.getNumber(), value, product);
                                 totalCount += Double.parseDouble(value) - Double.parseDouble(listModels.get(holder.getAdapterPosition()).getValue());
                                 listModels.set(holder.getAdapterPosition(), new ListModel(listModel.getNumber(), value, preference.getPreferenceString(KEY_CURRENCY), product, 1));
                                 notifyDataSetChanged();
-                                textTotal.setText(context.getString(R.string.total, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
+                                textTotal.setText(context.getString(R.string.total_price, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
                                 Toast.makeText(context, "Item updated...", Toast.LENGTH_SHORT).show();
                             }
                             database.updatePrices(holder.editAutoProduct.getText().toString(),
