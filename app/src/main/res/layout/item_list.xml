@@ -21,7 +21,7 @@
         android:backgroundTint="@android:color/transparent"
         android:gravity="center"
         android:hint="@string/price"
-        android:inputType="numberDecimal" />
+        android:inputType="numberSigned|numberDecimal" />
 
     <TextView
         android:id="@+id/text_item_currency"

@@ -138,9 +138,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         if (holder.editValue.getText().toString().isEmpty() || holder.editAutoProduct.getText().toString().isEmpty()) {
                             Toast.makeText(context, "Fill in all fields.", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (holder.editAutoProduct.getText().toString().substring(0, 1).equals("-")) {
-                                holder.editValue.setText(holder.editAutoProduct.getText().toString());
-                            }
                             int lastItem = listModels.size();
                             String value = holder.editValue.getText().toString();
                             String product = holder.editAutoProduct.getText().toString();
