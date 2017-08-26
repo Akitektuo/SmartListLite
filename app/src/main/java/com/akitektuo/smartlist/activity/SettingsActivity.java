@@ -656,6 +656,5 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
                 preference.setPreference(KEY_TOTAL, isChecked);
                 break;
         }
-        System.out.println(preference.getPreferenceBoolean(KEY_AUTO_FILL_WANTED));
     }
 }
