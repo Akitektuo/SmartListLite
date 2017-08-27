@@ -21,7 +21,8 @@
         android:backgroundTint="@android:color/transparent"
         android:gravity="center"
         android:hint="@string/price"
-        android:inputType="numberSigned|numberDecimal" />
+        android:inputType="numberSigned|numberDecimal"
+        android:textColor="@color/colorAccentBlack" />
 
     <TextView
         android:id="@+id/text_item_currency"
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
         android:gravity="center"
+        android:textColor="@color/colorPrimaryBlue"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -41,7 +43,8 @@
         android:completionThreshold="1"
         android:gravity="center"
         android:hint="@string/item"
-        android:imeOptions="actionDone" />
+        android:imeOptions="actionDone"
+        android:textColor="@color/colorAccentBlack" />
 
     <Button
         android:id="@+id/button_save"

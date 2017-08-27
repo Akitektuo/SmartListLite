@@ -28,16 +28,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.akitektuo.smartlist.util.Constant.COLOR_BLACK;
-import static com.akitektuo.smartlist.util.Constant.COLOR_BLUE;
-import static com.akitektuo.smartlist.util.Constant.COLOR_GREEN;
-import static com.akitektuo.smartlist.util.Constant.COLOR_ORANGE;
-import static com.akitektuo.smartlist.util.Constant.COLOR_RED;
-import static com.akitektuo.smartlist.util.Constant.COLOR_YELLOW;
 import static com.akitektuo.smartlist.util.Constant.KEY_AUTO_FILL;
-import static com.akitektuo.smartlist.util.Constant.KEY_COLOR;
 import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
-import static com.akitektuo.smartlist.util.Constant.KEY_NIGHT;
 import static com.akitektuo.smartlist.util.Constant.KEY_RECOMMENDATIONS;
 import static com.akitektuo.smartlist.util.Constant.handler;
 import static com.akitektuo.smartlist.util.Constant.preference;
@@ -269,55 +261,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             editAutoProduct = (AutoCompleteTextView) view.findViewById(R.id.edit_auto_item_product);
             buttonDelete = (Button) view.findViewById(R.id.button_delete);
             buttonSave = (Button) view.findViewById(R.id.button_save);
-            switch (preference.getPreferenceString(KEY_COLOR)) {
-                case COLOR_BLUE:
-                    textNumber.setTextColor(context.getResources().getColor(R.color.colorPrimaryBlue));
-                    textCurrency.setTextColor(context.getResources().getColor(R.color.colorPrimaryBlue));
-                    buttonDelete.setBackground(context.getDrawable(R.drawable.delete_blue));
-                    buttonSave.setBackground(context.getDrawable(R.drawable.save_blue));
-                    break;
-                case COLOR_YELLOW:
-                    textNumber.setTextColor(context.getResources().getColor(R.color.colorPrimaryYellow));
-                    textCurrency.setTextColor(context.getResources().getColor(R.color.colorPrimaryYellow));
-                    buttonDelete.setBackground(context.getDrawable(R.drawable.delete_yellow));
-                    buttonSave.setBackground(context.getDrawable(R.drawable.save_yellow));
-                    break;
-                case COLOR_RED:
-                    textNumber.setTextColor(context.getResources().getColor(R.color.colorPrimaryRed));
-                    textCurrency.setTextColor(context.getResources().getColor(R.color.colorPrimaryRed));
-                    buttonDelete.setBackground(context.getDrawable(R.drawable.delete_red));
-                    buttonSave.setBackground(context.getDrawable(R.drawable.save_red));
-                    break;
-                case COLOR_GREEN:
-                    textNumber.setTextColor(context.getResources().getColor(R.color.colorPrimaryGreen));
-                    textCurrency.setTextColor(context.getResources().getColor(R.color.colorPrimaryGreen));
-                    buttonDelete.setBackground(context.getDrawable(R.drawable.delete_green));
-                    buttonSave.setBackground(context.getDrawable(R.drawable.save_green));
-                    break;
-                case COLOR_ORANGE:
-                    textNumber.setTextColor(context.getResources().getColor(R.color.colorPrimaryOrange));
-                    textCurrency.setTextColor(context.getResources().getColor(R.color.colorPrimaryOrange));
-                    buttonDelete.setBackground(context.getDrawable(R.drawable.delete_orange));
-                    buttonSave.setBackground(context.getDrawable(R.drawable.save_orange));
-                    break;
-                case COLOR_BLACK:
-                    textNumber.setTextColor(context.getResources().getColor(R.color.colorPrimaryBlack));
-                    textCurrency.setTextColor(context.getResources().getColor(R.color.colorPrimaryBlack));
-                    buttonDelete.setBackground(context.getDrawable(R.drawable.delete_black));
-                    buttonSave.setBackground(context.getDrawable(R.drawable.save_black));
-                    break;
-            }
-            if (preference.getPreferenceBoolean(KEY_NIGHT)) {
-                editValue.setTextColor(context.getResources().getColor(R.color.trackBasic));
-                editValue.setHintTextColor(context.getResources().getColor(R.color.hint));
-                editAutoProduct.setTextColor(context.getResources().getColor(R.color.trackBasic));
-                editAutoProduct.setHintTextColor(context.getResources().getColor(R.color.hint));
-            } else {
-                editValue.setTextColor(context.getResources().getColor(R.color.colorPrimaryBlack));
-                editValue.setHintTextColor(context.getResources().getColor(R.color.hint));
-                editAutoProduct.setTextColor(context.getResources().getColor(R.color.colorPrimaryBlack));
-                editAutoProduct.setHintTextColor(context.getResources().getColor(R.color.hint));
-            }
         }
     }
 

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SmartList.iml" filepath="$PROJECT_DIR$/SmartList.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SmartListLite.iml" filepath="$PROJECT_DIR$/SmartListLite.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/jxl/jxl.iml" filepath="$PROJECT_DIR$/jxl/jxl.iml" />
     </modules>

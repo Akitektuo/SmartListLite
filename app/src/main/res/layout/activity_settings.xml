@@ -5,6 +5,7 @@
     android:id="@+id/layout_main_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:context="com.akitektuo.smartlist.activity.SettingsActivity">
 
@@ -97,7 +98,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
-                            android:text="@string/recommendations_status" />
+                            android:text="@string/recommendations_status"
+                            android:textColor="@color/colorAccentBlack" />
 
                     </LinearLayout>
 
@@ -158,7 +160,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
-                            android:text="@string/fill_status" />
+                            android:text="@string/fill_status"
+                            android:textColor="@color/colorAccentBlack" />
 
                     </LinearLayout>
 
@@ -173,176 +176,6 @@
                     app:kswTintColor="@color/colorAccentBlue" />
 
             </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/image_settings_1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colorPrimaryDarkBlue" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:id="@+id/layout_night"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/switch_settings_night"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/image_settings_night"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/night_blue" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/text_settings_night"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/night"
-                            android:textColor="@color/colorPrimaryBlue"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/text_settings_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:text="@string/night_status" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <com.kyleduo.switchbutton.SwitchButton
-                    android:id="@+id/switch_settings_night"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    app:kswTintColor="@color/colorAccentBlue" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/image_settings_2"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colorPrimaryDarkBlue" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:id="@+id/layout_total"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/switch_settings_total"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/image_settings_total"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/total_blue" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/text_settings_total"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/total"
-                            android:textColor="@color/colorPrimaryBlue"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/text_settings_3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:text="@string/total_status" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <com.kyleduo.switchbutton.SwitchButton
-                    android:id="@+id/switch_settings_total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    app:kswTintColor="@color/colorAccentBlue" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/image_settings_3"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colorPrimaryDarkBlue" />
-
-            <LinearLayout
-                android:id="@+id/layout_excel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <ImageView
-                    android:id="@+id/image_settings_excel"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/excel_blue" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_settings_excel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/excel"
-                        android:textColor="@color/colorPrimaryBlue"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/text_settings_4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/excel_status" />
-
-                </LinearLayout>
-
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/text_settings_personalization"
@@ -386,67 +219,16 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/text_settings_5"
+                        android:id="@+id/text_settings_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:text="@string/currency_status" />
+                        android:text="@string/currency_status"
+                        android:textColor="@color/colorAccentBlack" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/image_settings_4"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colorPrimaryDarkBlue" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:id="@+id/layout_color"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/image_settings_color"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/color_blue" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/text_settings_color"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/color"
-                            android:textColor="@color/colorPrimaryBlue"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/text_settings_6"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:text="@string/color_status" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text_settings_advanced"
@@ -494,11 +276,12 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/text_settings_7"
+                            android:id="@+id/text_settings_3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
-                            android:text="@string/products_status" />
+                            android:text="@string/products_status"
+                            android:textColor="@color/colorAccentBlack" />
 
                     </LinearLayout>
 
@@ -507,7 +290,7 @@
             </RelativeLayout>
 
             <ImageView
-                android:id="@+id/image_settings_5"
+                android:id="@+id/image_settings_1"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/colorPrimaryDarkBlue" />
@@ -546,63 +329,18 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/text_settings_8"
+                            android:id="@+id/text_settings_4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
-                            android:text="@string/limit_status" />
+                            android:text="@string/limit_status"
+                            android:textColor="@color/colorAccentBlack" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
             </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/image_settings_6"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colorPrimaryDarkBlue" />
-
-            <LinearLayout
-                android:id="@+id/layout_storage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <ImageView
-                    android:id="@+id/image_settings_storage"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/internal_storage_blue" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_settings_storage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/storage"
-                        android:textColor="@color/colorPrimaryBlue"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/text_settings_9"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/storage_status" />
-
-                </LinearLayout>
-
-            </LinearLayout>
 
         </LinearLayout>
 

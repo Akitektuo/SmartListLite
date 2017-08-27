@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smart List</string>
+    <string name="app_name">Smart List Lite</string>
     <string name="total_price">Total: %1$s %2$s</string>
     <string name="price">Price</string>
     <string name="item">Item</string>
@@ -14,17 +14,8 @@
     <string name="fill_status">When the price field is empty, type in the price automatically</string>
     <string name="limit">Price Limit</string>
     <string name="limit_status">Set the limit of the price that will be automatically filled</string>
-    <string name="color">Color</string>
-    <string name="color_status">Change the colors of Smart List or turn on/off night mode</string>
-    <string name="excel">Export Excel</string>
-    <string name="excel_status">Export my list as an Microsoft Excel Document which I can find in Internal Storage in the folder Smart List</string>
     <string name="fill_limit">Set the limit of Smart Fill</string>
     <string name="fill_aware">Higher limit means worse performance</string>
-    <string name="storage">Export location</string>
-    <string name="storage_status">Choose the export location to internal or external storage for the Microsoft Excel Document</string>
-    <string name="night">Night Mode</string>
-    <string name="night_status">Switch between day mode and night mode</string>
-    <string name="total">Total Amount</string>
     <string name="total_status">Add the total spent amount at the end of the generated Microsoft Excel Document</string>
     <string name="utilities">Utilities</string>
     <string name="personalization">Personalization</string>

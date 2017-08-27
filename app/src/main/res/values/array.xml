@@ -15,12 +15,4 @@
         <item>SEK</item>
         <item>AED</item>
     </array>
-    <array name="color">
-        <item>Blue</item>
-        <item>Yellow</item>
-        <item>Red</item>
-        <item>Green</item>
-        <item>Orange</item>
-        <item>Black</item>
-    </array>
 </resources>

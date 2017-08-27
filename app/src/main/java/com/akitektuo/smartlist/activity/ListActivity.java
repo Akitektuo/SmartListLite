@@ -3,7 +3,6 @@ package com.akitektuo.smartlist.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -11,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,16 +23,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.akitektuo.smartlist.util.Constant.COLOR_BLACK;
-import static com.akitektuo.smartlist.util.Constant.COLOR_BLUE;
-import static com.akitektuo.smartlist.util.Constant.COLOR_GREEN;
-import static com.akitektuo.smartlist.util.Constant.COLOR_ORANGE;
-import static com.akitektuo.smartlist.util.Constant.COLOR_RED;
-import static com.akitektuo.smartlist.util.Constant.COLOR_YELLOW;
-import static com.akitektuo.smartlist.util.Constant.KEY_COLOR;
 import static com.akitektuo.smartlist.util.Constant.KEY_CREATED;
 import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
-import static com.akitektuo.smartlist.util.Constant.KEY_NIGHT;
 import static com.akitektuo.smartlist.util.Constant.handler;
 import static com.akitektuo.smartlist.util.Constant.preference;
 import static com.akitektuo.smartlist.util.Constant.totalCount;
@@ -45,12 +34,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private static DatabaseHelper database;
     private RecyclerView list;
     private TextView textResult;
-    private RelativeLayout layoutHeader;
     private List<ListModel> listModels;
-    private RelativeLayout layoutMain;
-    private TextView textTitle;
-    private Button buttonSettings;
-    private Button buttonDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +50,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         linearLayoutManager.setStackFromEnd(true);
         list.setLayoutManager(linearLayoutManager);
         textResult = (TextView) findViewById(R.id.text_result);
-        layoutHeader = (RelativeLayout) findViewById(R.id.layout_list_header);
-        layoutMain = (RelativeLayout) findViewById(R.id.layout_main);
-        textTitle = (TextView) findViewById(R.id.text_title_main);
-        buttonSettings = (Button) findViewById(R.id.button_settings);
-        buttonDelete = (Button) findViewById(R.id.button_delete_all);
-        buttonSettings.setOnClickListener(this);
-        buttonDelete.setOnClickListener(this);
-        refreshForColor(preference.getPreferenceString(KEY_COLOR));
+        findViewById(R.id.button_settings).setOnClickListener(this);
+        findViewById(R.id.button_delete_all).setOnClickListener(this);
         totalCount = 0;
         listModels = new ArrayList<>();
         Cursor cursor = database.getList();
@@ -131,50 +109,5 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, SettingsActivity.class));
                 finish();
         }
-    }
-
-    private void refreshForColor(String color) {
-        switch (color) {
-            case COLOR_BLUE:
-                setColor(R.style.Theme_Blue, R.color.colorPrimaryBlue, R.color.colorPrimaryDarkBlue);
-                break;
-            case COLOR_YELLOW:
-                setColor(R.style.Theme_Yellow, R.color.colorPrimaryYellow, R.color.colorPrimaryDarkYellow);
-                break;
-            case COLOR_RED:
-                setColor(R.style.Theme_Red, R.color.colorPrimaryRed, R.color.colorPrimaryDarkRed);
-                break;
-            case COLOR_GREEN:
-                setColor(R.style.Theme_Green, R.color.colorPrimaryGreen, R.color.colorPrimaryDarkGreen);
-                break;
-            case COLOR_ORANGE:
-                setColor(R.style.Theme_Orange, R.color.colorPrimaryOrange, R.color.colorPrimaryDarkOrange);
-                break;
-            case COLOR_BLACK:
-                setColor(R.style.Theme_Black, R.color.colorPrimaryBlack, R.color.colorPrimaryDarkBlack);
-                break;
-        }
-        if (preference.getPreferenceBoolean(KEY_NIGHT)) {
-            buttonSettings.setBackground(getDrawable(R.drawable.settings_black));
-            buttonDelete.setBackground(getDrawable(R.drawable.delete_all_black));
-            layoutMain.setBackgroundColor(getResources().getColor(R.color.colorPrimaryBlack));
-            textTitle.setTextColor(getResources().getColor(R.color.colorPrimaryDarkBlack));
-            textResult.setTextColor(getResources().getColor(R.color.colorPrimaryDarkBlack));
-        } else {
-            buttonSettings.setBackground(getDrawable(R.drawable.settings_white));
-            buttonDelete.setBackground(getDrawable(R.drawable.delete_all_white));
-            layoutMain.setBackgroundColor(getResources().getColor(R.color.background));
-            textTitle.setTextColor(getResources().getColor(R.color.white));
-            textResult.setTextColor(getResources().getColor(R.color.white));
-        }
-    }
-
-    private void setColor(int theme, int colorPrimary, int colorPrimaryDark) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            super.setTheme(theme);
-        }
-        getWindow().setStatusBarColor(getResources().getColor(colorPrimaryDark));
-        layoutHeader.setBackgroundColor(getResources().getColor(colorPrimary));
-        textResult.setBackgroundColor(getResources().getColor(colorPrimary));
     }
 }
