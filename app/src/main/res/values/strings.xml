@@ -26,4 +26,7 @@
     <string name="night_status">Switch between day mode and night mode</string>
     <string name="total">Total Amount</string>
     <string name="total_status">Add the total spent amount at the end of the generated Microsoft Excel Document</string>
+    <string name="utilities">Utilities</string>
+    <string name="personalization">Personalization</string>
+    <string name="advanced_settings">Advanced Settings</string>
 </resources>

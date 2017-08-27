@@ -88,6 +88,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
     private LinearLayout layoutMain;
     private List<ImageView> imageViews;
     private List<TextView> textViews;
+    private TextView textHeaderUtilities;
+    private TextView textHeaderPersonalization;
+    private TextView textHeaderAdvanced;
     private TextView textSettings;
     private TextView textCurrency;
     private TextView textRecommendations;
@@ -129,8 +132,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
         imageViews.add((ImageView) findViewById(R.id.image_settings_4));
         imageViews.add((ImageView) findViewById(R.id.image_settings_5));
         imageViews.add((ImageView) findViewById(R.id.image_settings_6));
-        imageViews.add((ImageView) findViewById(R.id.image_settings_7));
-        imageViews.add((ImageView) findViewById(R.id.image_settings_8));
         textViews = new ArrayList<>();
         textViews.add((TextView) findViewById(R.id.text_settings_0));
         textViews.add((TextView) findViewById(R.id.text_settings_1));
@@ -142,6 +143,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
         textViews.add((TextView) findViewById(R.id.text_settings_7));
         textViews.add((TextView) findViewById(R.id.text_settings_8));
         textViews.add((TextView) findViewById(R.id.text_settings_9));
+        textHeaderUtilities = (TextView) findViewById(R.id.text_settings_utilities);
+        textHeaderPersonalization = (TextView) findViewById(R.id.text_settings_personalization);
+        textHeaderAdvanced = (TextView) findViewById(R.id.text_settings_advanced);
         textSettings = (TextView) findViewById(R.id.text_title_settings);
         textCurrency = (TextView) findViewById(R.id.text_settings_currency);
         textRecommendations = (TextView) findViewById(R.id.text_settings_recommendations);
@@ -504,6 +508,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
             for (TextView textView : textViews) {
                 textView.setTextColor(getResources().getColor(R.color.trackBasic));
             }
+            textHeaderUtilities.setTextColor(getResources().getColor(R.color.colorPrimaryDarkBlack));
+            textHeaderPersonalization.setTextColor(getResources().getColor(R.color.colorPrimaryDarkBlack));
+            textHeaderAdvanced.setTextColor(getResources().getColor(R.color.colorPrimaryDarkBlack));
         } else {
             buttonBack.setBackground(getDrawable(R.drawable.back_white));
             layoutMain.setBackgroundColor(getResources().getColor(R.color.background));
@@ -511,6 +518,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
             for (TextView textView : textViews) {
                 textView.setTextColor(getResources().getColor(R.color.colorPrimaryBlack));
             }
+            textHeaderUtilities.setTextColor(getResources().getColor(R.color.white));
+            textHeaderPersonalization.setTextColor(getResources().getColor(R.color.white));
+            textHeaderAdvanced.setTextColor(getResources().getColor(R.color.white));
         }
     }
 
@@ -537,6 +547,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
         switchFill.setTintColor(getResources().getColor(colorPrimary));
         switchNight.setTintColor(getResources().getColor(colorPrimary));
         switchTotal.setTintColor(getResources().getColor(colorPrimary));
+        textHeaderUtilities.setBackgroundColor(getResources().getColor(colorPrimary));
+        textHeaderPersonalization.setBackgroundColor(getResources().getColor(colorPrimary));
+        textHeaderAdvanced.setBackgroundColor(getResources().getColor(colorPrimary));
     }
 
     private void exportToExcel(Cursor cursor) {
