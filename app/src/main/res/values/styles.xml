@@ -1,12 +1,10 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme_Blue" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimaryBlue</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
-        <item name="colorAccent">@color/colorAccentBlue</item>
-        <item name="colorControlHighlight">@color/colorAccentBlue</item>
-        <item name="colorSwitchThumbNormal">@color/colorAccentBlue</item>
-        <item name="android:colorEdgeEffect">@color/colorAccentBlue</item>
+    <style name="Theme_Light" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorLightSilverDark</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="colorAccent">@color/colorLight</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

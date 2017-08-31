@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dp"
+    android:paddingTop="4dp">
 
     <TextView
-        android:id="@+id/text_item_number"
+        android:id="@+id/text_item_light_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
-        android:textColor="@color/colorPrimaryBlue"
+        android:textColor="@color/colorLight"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/edit_item_value"
+        android:id="@+id/edit_item_light_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
@@ -22,20 +23,21 @@
         android:gravity="center"
         android:hint="@string/price"
         android:inputType="numberSigned|numberDecimal"
-        android:textColor="@color/colorAccentBlack" />
+        android:textColor="@color/colorLightSilverDark"
+        android:textColorHint="@color/colorLightSilver" />
 
     <TextView
-        android:id="@+id/text_item_currency"
+        android:id="@+id/text_item_light_currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
         android:gravity="center"
-        android:textColor="@color/colorPrimaryBlue"
+        android:textColor="@color/colorLightSilverDark"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <AutoCompleteTextView
-        android:id="@+id/edit_auto_item_product"
+        android:id="@+id/edit_auto_item_light_product"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.7"
@@ -44,18 +46,20 @@
         android:gravity="center"
         android:hint="@string/item"
         android:imeOptions="actionDone"
-        android:textColor="@color/colorAccentBlack" />
+        android:textColor="@color/colorLightSilverDark"
+        android:textColorHint="@color/colorLightSilver" />
 
     <Button
-        android:id="@+id/button_save"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:background="@drawable/save_blue"/>
+        android:id="@+id/button_light_save"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:background="@drawable/light_save" />
 
     <Button
-        android:id="@+id/button_delete"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:background="@drawable/delete_blue"/>
+        android:id="@+id/button_light_delete"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/light_delete" />
 
 </LinearLayout>

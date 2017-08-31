@@ -16,8 +16,5 @@
     <string name="limit_status">Set the limit of the price that will be automatically filled</string>
     <string name="fill_limit">Set the limit of Smart Fill</string>
     <string name="fill_aware">Higher limit means worse performance</string>
-    <string name="total_status">Add the total spent amount at the end of the generated Microsoft Excel Document</string>
-    <string name="utilities">Utilities</string>
-    <string name="personalization">Personalization</string>
-    <string name="advanced_settings">Advanced Settings</string>
+    <string name="limit_set">Limit will be set to:</string>
 </resources>

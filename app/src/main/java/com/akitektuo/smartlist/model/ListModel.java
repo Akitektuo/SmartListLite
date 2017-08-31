@@ -1,4 +1,4 @@
-package com.akitektuo.smartlist.util;
+package com.akitektuo.smartlist.model;
 
 /**
  * Created by AoD Akitektuo on 14-Mar-17.

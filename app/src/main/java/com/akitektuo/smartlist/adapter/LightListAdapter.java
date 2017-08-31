@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.akitektuo.smartlist.R;
 import com.akitektuo.smartlist.database.DatabaseHelper;
-import com.akitektuo.smartlist.util.ListModel;
+import com.akitektuo.smartlist.model.ListModel;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -39,14 +39,14 @@ import static com.akitektuo.smartlist.util.Constant.totalCount;
  * Created by AoD Akitektuo on 22-Aug-17 at 19:27.
  */
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class LightListAdapter extends RecyclerView.Adapter<LightListAdapter.ViewHolder> {
 
     private Context context;
     private List<ListModel> listModels;
     private DatabaseHelper database;
     private TextView textTotal;
 
-    public ListAdapter(Context context, List<ListModel> listModels, TextView textTotal) {
+    public LightListAdapter(Context context, List<ListModel> listModels, TextView textTotal) {
         this.context = context;
         this.listModels = listModels;
         database = new DatabaseHelper(context);
@@ -54,9 +54,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     @Override
-    public ListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LightListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.item_list, parent, false);
+        View view = inflater.inflate(R.layout.item_list_light, parent, false);
         return new ViewHolder(view);
     }
 
@@ -255,12 +255,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         ViewHolder(View view) {
             super(view);
-            textNumber = (TextView) view.findViewById(R.id.text_item_number);
-            editValue = (EditText) view.findViewById(R.id.edit_item_value);
-            textCurrency = (TextView) view.findViewById(R.id.text_item_currency);
-            editAutoProduct = (AutoCompleteTextView) view.findViewById(R.id.edit_auto_item_product);
-            buttonDelete = (Button) view.findViewById(R.id.button_delete);
-            buttonSave = (Button) view.findViewById(R.id.button_save);
+            textNumber = (TextView) view.findViewById(R.id.text_item_light_number);
+            editValue = (EditText) view.findViewById(R.id.edit_item_light_value);
+            textCurrency = (TextView) view.findViewById(R.id.text_item_light_currency);
+            editAutoProduct = (AutoCompleteTextView) view.findViewById(R.id.edit_auto_item_light_product);
+            buttonDelete = (Button) view.findViewById(R.id.button_light_delete);
+            buttonSave = (Button) view.findViewById(R.id.button_light_save);
         }
     }
 

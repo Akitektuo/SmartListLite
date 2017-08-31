@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryBlue">#0084FF</color>
-    <color name="colorPrimaryDarkBlue">#006ACC</color>
-    <color name="colorAccentBlue">#0084FF</color>
-    <color name="colorAccentBlack">#262626</color>
-    <color name="white">#FFFFFF</color>
-    <color name="background">#FAFAFA</color>
-    <color name="thumbBasic">#ECECEC</color>
-    <color name="trackBasic">#888888</color>
-    <color name="hint">#663300</color>
+    <color name="white">#FAFAFA</color>
+    <color name="colorLight">#10DDB9</color>
+    <color name="colorLightSilverDark">#787878</color>
+    <color name="colorLightSilver">#A6A6A6</color>
+    <color name="colorLightSilverLight">#DEDEDE</color>
+    <color name="colorLightBlack">#323232</color>
 </resources>
