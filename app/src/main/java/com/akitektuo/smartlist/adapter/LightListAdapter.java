@@ -106,7 +106,6 @@ public class LightListAdapter extends RecyclerView.Adapter<LightListAdapter.View
                 builderDelete.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(context, "Item deleted...", Toast.LENGTH_SHORT).show();
                         totalCount -= Double.parseDouble(listModels.get(holder.getAdapterPosition()).getValue());
                         database.deleteList(holder.getAdapterPosition() + 1);
                         listModels.remove(holder.getAdapterPosition());
@@ -141,14 +140,12 @@ public class LightListAdapter extends RecyclerView.Adapter<LightListAdapter.View
                                 listModels.add(new ListModel(listModels.size() + 1, "", preference.getPreferenceString(KEY_CURRENCY), "", 0));
                                 notifyDataSetChanged();
                                 textTotal.setText(context.getString(R.string.total_price, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
-                                Toast.makeText(context, "Item saved...", Toast.LENGTH_SHORT).show();
                             } else {
                                 database.updateList(holder.getAdapterPosition() + 1, listModel.getNumber(), value, product);
                                 totalCount += Double.parseDouble(value) - Double.parseDouble(listModels.get(holder.getAdapterPosition()).getValue());
                                 listModels.set(holder.getAdapterPosition(), new ListModel(listModel.getNumber(), value, preference.getPreferenceString(KEY_CURRENCY), product, 1));
                                 notifyDataSetChanged();
                                 textTotal.setText(context.getString(R.string.total_price, new DecimalFormat("0.#").format(totalCount), preference.getPreferenceString(KEY_CURRENCY)));
-                                Toast.makeText(context, "Item updated...", Toast.LENGTH_SHORT).show();
                             }
                             database.updatePrices(holder.editAutoProduct.getText().toString(),
                                     holder.editValue.getText().toString());
