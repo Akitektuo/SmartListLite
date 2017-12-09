@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.akitektuo.smartlist.R;
 import com.akitektuo.smartlist.database.DatabaseHelper;
 import com.akitektuo.smartlist.model.ListModel;
+import com.akitektuo.smartlist.util.Preference;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -32,7 +33,6 @@ import static com.akitektuo.smartlist.util.Constant.KEY_AUTO_FILL;
 import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
 import static com.akitektuo.smartlist.util.Constant.KEY_RECOMMENDATIONS;
 import static com.akitektuo.smartlist.util.Constant.handler;
-import static com.akitektuo.smartlist.util.Constant.preference;
 import static com.akitektuo.smartlist.util.Constant.totalCount;
 
 /**
@@ -45,10 +45,12 @@ public class LightListAdapter extends RecyclerView.Adapter<LightListAdapter.View
     private List<ListModel> listModels;
     private DatabaseHelper database;
     private TextView textTotal;
+    private Preference preference;
 
     public LightListAdapter(Context context, List<ListModel> listModels, TextView textTotal) {
         this.context = context;
         this.listModels = listModels;
+        preference = new Preference(context);
         database = new DatabaseHelper(context);
         this.textTotal = textTotal;
     }

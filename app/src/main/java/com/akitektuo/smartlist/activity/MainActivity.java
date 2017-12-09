@@ -13,7 +13,6 @@ import com.akitektuo.smartlist.fragment.SettingsFragment;
 import com.akitektuo.smartlist.util.Preference;
 
 import static com.akitektuo.smartlist.util.Constant.KEY_CREATED;
-import static com.akitektuo.smartlist.util.Constant.preference;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, View.OnClickListener {
 
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        preference = new Preference(this);
+        Preference preference = new Preference(this);
         if (!preference.getPreferenceBoolean(KEY_CREATED)) {
             preference.setDefault();
         }

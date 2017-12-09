@@ -17,6 +17,7 @@ import android.widget.Switch;
 
 import com.akitektuo.smartlist.R;
 import com.akitektuo.smartlist.database.DatabaseHelper;
+import com.akitektuo.smartlist.util.Preference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,6 @@ import static com.akitektuo.smartlist.util.Constant.KEY_AUTO_FILL_WANTED;
 import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
 import static com.akitektuo.smartlist.util.Constant.KEY_RECOMMENDATIONS;
 import static com.akitektuo.smartlist.util.Constant.KEY_SMART_PRICE;
-import static com.akitektuo.smartlist.util.Constant.preference;
 
 /**
  * Created by AoD Akitektuo on 30-Aug-17 at 21:13.
@@ -50,6 +50,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     private DatabaseHelper database;
     private Switch switchRecommendations;
     private Switch switchFill;
+    private Preference preference;
 
     public SettingsFragment() {
 
@@ -58,6 +59,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        preference = new Preference(getContext());
 
         switchRecommendations = (Switch) getActivity().findViewById(R.id.switch_light_recommendations);
         switchFill = (Switch) getActivity().findViewById(R.id.switch_light_fill);

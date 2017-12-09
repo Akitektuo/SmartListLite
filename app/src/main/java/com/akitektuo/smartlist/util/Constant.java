@@ -35,7 +35,6 @@ public class Constant {
     public static final String KEY_AUTO_FILL_WANTED = "auto_fill_wanted";
     public static final String KEY_SMART_PRICE = "smart_price";
 
-    public static Preference preference;
     public static double totalCount;
 
 }

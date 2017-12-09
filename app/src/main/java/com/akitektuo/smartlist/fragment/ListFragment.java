@@ -16,6 +16,7 @@ import com.akitektuo.smartlist.R;
 import com.akitektuo.smartlist.adapter.LightListAdapter;
 import com.akitektuo.smartlist.database.DatabaseHelper;
 import com.akitektuo.smartlist.model.ListModel;
+import com.akitektuo.smartlist.util.Preference;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -23,7 +24,6 @@ import java.util.List;
 
 import static com.akitektuo.smartlist.util.Constant.KEY_CURRENCY;
 import static com.akitektuo.smartlist.util.Constant.handler;
-import static com.akitektuo.smartlist.util.Constant.preference;
 import static com.akitektuo.smartlist.util.Constant.totalCount;
 
 /**
@@ -38,6 +38,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     private List<ListModel> listModels;
     private String oldCurrency;
     private boolean created = false;
+    private Preference preference;
 
     public ListFragment() {
     }
@@ -45,6 +46,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        preference = new Preference(getContext());
         database = new DatabaseHelper(getContext());
         list = (RecyclerView) getActivity().findViewById(R.id.list_light_main);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

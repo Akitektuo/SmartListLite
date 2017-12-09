@@ -6,12 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.akitektuo.smartlist.util.Preference;
+
 import java.text.DecimalFormat;
 
 import static com.akitektuo.smartlist.util.Constant.KEY_SMART_PRICE;
 import static com.akitektuo.smartlist.util.Constant.PRICE_LIMIT;
 import static com.akitektuo.smartlist.util.Constant.handler;
-import static com.akitektuo.smartlist.util.Constant.preference;
 
 /**
  * Created by Akitektuo on 15.03.2017.
@@ -33,8 +34,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             DatabaseContract.UsageContractEntry.COLUMN_NAME_PRODUCTS + " TEXT," +
             DatabaseContract.UsageContractEntry.COLUMN_NAME_PRICES + " TEXT" + ");";
 
+    private Preference preference;
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        preference = new Preference(context);
     }
 
     @Override
